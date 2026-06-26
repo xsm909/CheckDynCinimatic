@@ -54,19 +54,25 @@ void UCinematicCreator::SetCinematicDuration(float DurationInSeconds)
 
     UMovieScene* MovieScene = Sequence->GetMovieScene();
     FFrameRate TickResolution = MovieScene->GetTickResolution();
-
-    // Преобразуем секунды в количество кадров
-    FFrameNumber StartFrame = FFrameNumber(0);
-    FFrameNumber EndFrame = (DurationInSeconds * TickResolution).FrameNumber;
-
-    // Устанавливаем диапазон воспроизведения
-    // TRange создает интервал [Start, End)
-    TRange<FFrameNumber> PlaybackRange = TRange<FFrameNumber>(StartFrame, EndFrame);
     
-    MovieScene->SetPlaybackRange(PlaybackRange);
+    FFrameTime EndFrameTime = DurationInSeconds * TickResolution;
+    FFrameNumber EndFrame = EndFrameTime.FrameNumber;
+    TRange<FFrameNumber> NewRange = TRange<FFrameNumber>(FFrameNumber(0), EndFrame);
+
+    // 1. Устанавливаем рабочий диапазон воспроизведения
+    MovieScene->SetPlaybackRange(NewRange);
+
+    // 2. КРИТИЧНО: Устанавливаем диапазон просмотра (Working Range)
+    // Именно он часто ограничивает плейбек в редакторе, если он меньше PlaybackRange
+    MovieScene->SetWorkingRange(0, 1000);
     
-    // Помечаем объект как измененный, чтобы изменения сохранились
+
+    // 3. Уведомляем систему об изменениях
+    MovieScene->Modify();
     Sequence->Modify();
+    
+    // Дополнительно: принудительное обновление для плеера
+    MovieScene->PostEditChange();
 }
 
 void UCinematicCreator::AddTransformKey(FName Alias, FTransform Transform, float Time, ECinematicInterpType Interp)

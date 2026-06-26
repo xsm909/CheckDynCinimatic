@@ -61,8 +61,11 @@ Build/*
 !Build/IOS/Resources/Graphics/
 !Build/IOS/Resources/Graphics/**
 
-/Plugins/GameFeatures/CinimaticDirector/Intermediate/
-/Plugins/GameFeatures/CinimaticDirector/Intermediate/**
+Plugins/GameFeatures/CinimaticDirector/Intermediate/Build/*
+Plugins/GameFeatures/CinimaticDirector/Intermediate/Build/Win64/*
+Plugins/GameFeatures/CinimaticDirector/Intermediate/Build/Win64/
+Plugins/GameFeatures/CinimaticDirector/Intermediate/
+Plugins/GameFeatures/CinimaticDirector/Intermediate/**
 
 #Collections
 Saved/Collections
