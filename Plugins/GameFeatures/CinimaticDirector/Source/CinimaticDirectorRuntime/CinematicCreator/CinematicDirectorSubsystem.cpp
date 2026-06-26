@@ -64,7 +64,10 @@ ALevelSequenceActor* UCinematicDirectorSubsystem::PlayCinematicByIndex(int32 Ind
 #include "Misc/PackageName.h"
 #include "UObject/SavePackage.h"
 #include "Misc/PackageName.h"
+
+#if WITH_EDITOR
 #include "Misc/FileHelper.h"
+#endif
 
 bool UCinematicDirectorSubsystem::SaveCinematicByIndex(int32 Index, FString AssetName, FString PackagePath)
 {

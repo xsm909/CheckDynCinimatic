@@ -23,12 +23,20 @@ public class CheckDynCinimatic : ModuleRules
 			"Slate",
 			"LevelSequence",
 			"MovieScene",
-			"MovieSceneTracks",
-			"UnrealEd",
-			"AssetTools",
-			"LevelSequenceEditor",
+			"MovieSceneTracks"
+			// "AssetTools" и "LevelSequenceEditor" УДАЛЕНЫ отсюда
 		});
 
+
+		if (Target.bBuildEditor == true)
+		{
+			PublicDependencyModuleNames.AddRange(new string[] {
+				"AssetTools",
+				"LevelSequenceEditor",
+				"UnrealEd"
+			});
+		}
+		
 		PrivateDependencyModuleNames.AddRange(new string[] { });
 
 		PublicIncludePaths.AddRange(new string[] {

@@ -123,3 +123,5 @@ Plugins/GameFeatures/CinimaticDirector/Intermediate/Build/Win64/x64/UnrealEditor
 Plugins/GameFeatures/CinimaticDirector/Intermediate/Build/Win64/x64/UnrealEditor/Development/CinimaticDirectorRuntime/Module.CinimaticDirectorRuntime.cpp
 Plugins/GameFeatures/CinimaticDirector/Intermediate/Build/Win64/x64/UnrealEditor/Development/CinimaticDirectorRuntime/LiveCodingInfo.json.old
 Plugins/GameFeatures/CinimaticDirector/Intermediate/Build/Win64/x64/UnrealEditor/Development/CinimaticDirectorRuntime/LiveCodingInfo.json
+/Plugins/GameFeatures/CinimaticDirector/Binaries
+/Plugins/GameFeatures/CinimaticDirector/Binaries/Win64

@@ -16,8 +16,17 @@ bool UCinematicCreator::RegisterPossessableActor(AActor* Actor, FName Alias)
     if (!Actor || !Sequence) return false;
     
     UMovieScene* MovieScene = Sequence->GetMovieScene();
-    FGuid ActorGuid = MovieScene->AddPossessable(Actor->GetActorLabel(), Actor->GetClass());
+    
+    
+    #if WITH_EDITOR
+        FGuid ActorGuid = MovieScene->AddPossessable(Actor->GetActorLabel(), Actor->GetClass());
+    #else
+        // В Shipping логика может быть другой, либо оставьте пустым
+        FGuid ActorGuid; 
+    #endif
+    
     Sequence->BindPossessableObject(ActorGuid, *Actor, GetWorld());
+    
     
     RegisteredActors.Add(Alias, ActorGuid);
     return true;
@@ -72,7 +81,9 @@ void UCinematicCreator::SetCinematicDuration(float DurationInSeconds)
     Sequence->Modify();
     
     // Дополнительно: принудительное обновление для плеера
+#if WITH_EDITOR
     MovieScene->PostEditChange();
+#endif
 }
 
 void UCinematicCreator::AddTransformKey(FName Alias, FTransform Transform, float Time, ECinematicInterpType Interp)
