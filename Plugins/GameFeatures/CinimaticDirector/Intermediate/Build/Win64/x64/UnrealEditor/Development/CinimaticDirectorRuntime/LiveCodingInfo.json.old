@@ -1,0 +1,9 @@
+{
+	"RemapUnityFiles": 
+	{
+		"Module.CinimaticDirectorRuntime.cpp.obj": [
+			"PerModuleInline.gen.cpp.obj",
+			"CinimaticDirectorRuntimeModule.cpp.obj"
+		]
+	}
+}

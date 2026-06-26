@@ -1,0 +1,15 @@
+{
+	"RemapUnityFiles": 
+	{
+		"Module.CinimaticDirectorRuntime.cpp.obj": [
+			"CinematicCreator.gen.cpp.obj",
+			"CinematicDirectorSubsystem.gen.cpp.obj",
+			"CinematicTypes.gen.cpp.obj",
+			"CinimaticDirectorRuntime.init.gen.cpp.obj",
+			"PerModuleInline.gen.cpp.obj",
+			"CinematicCreator.cpp.obj",
+			"CinematicDirectorSubsystem.cpp.obj",
+			"CinimaticDirectorRuntimeModule.cpp.obj"
+		]
+	}
+}
