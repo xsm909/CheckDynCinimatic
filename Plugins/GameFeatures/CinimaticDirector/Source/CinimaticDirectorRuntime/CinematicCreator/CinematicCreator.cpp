@@ -1,9 +1,11 @@
-﻿#include "CinematicCreator.h"
+#include "CinematicCreator.h"
 #include "MovieScene.h"
 #include "Tracks/MovieScene3DTransformTrack.h"
 #include "Sections/MovieScene3DTransformSection.h"
 #include "Channels/MovieSceneDoubleChannel.h" // Убедитесь, что это есть
 #include "Channels/MovieSceneFloatChannel.h"
+#include "Tracks/MovieSceneSpawnTrack.h"
+#include "Sections/MovieSceneSpawnSection.h"
 
 void UCinematicCreator::InitializeCreator()
 {
@@ -30,18 +32,30 @@ bool UCinematicCreator::RegisterSpawnableActor(TSubclassOf<AActor> ActorClass, F
 
     UMovieScene* MovieScene = Sequence->GetMovieScene();
     
-    // 1. Создаем временный объект-шаблон (Template) в Transient пакете
-    // MovieScene будет использовать его как прототип для спавна в мире
-    AActor* SpawnTemplate = NewObject<AActor>(GetTransientPackage(), ActorClass, NAME_None, RF_Transient);
+    // 1. Создаем временный объект-шаблон (Template)
+    // НЕ используем RF_Transient, так как MovieScene::AddSpawnable скопирует этот флаг на внутренний шаблон,
+    // и тогда актор не сохранится в ассете и может быть уничтожен GC в рантайме.
+    AActor* SpawnTemplate = NewObject<AActor>(GetTransientPackage(), ActorClass, NAME_None);
     
     if (!SpawnTemplate) return false;
 
     // 2. Добавляем Spawnable через шаблон
-    // AddSpawnable возвращает FGuid, но внутри себя делает копию нашего шаблона
     FGuid ActorGuid = MovieScene->AddSpawnable(Alias.ToString(), *SpawnTemplate);
     
     if (ActorGuid.IsValid())
     {
+        // 3. Добавляем трек спавна, чтобы актор гарантированно спавнился в рантайме
+        UMovieSceneSpawnTrack* SpawnTrack = MovieScene->AddTrack<UMovieSceneSpawnTrack>(ActorGuid);
+        if (SpawnTrack)
+        {
+            UMovieSceneSpawnSection* SpawnSection = Cast<UMovieSceneSpawnSection>(SpawnTrack->CreateNewSection());
+            if (SpawnSection)
+            {
+                SpawnSection->SetRange(TRange<FFrameNumber>::All());
+                SpawnTrack->AddSection(*SpawnSection);
+            }
+        }
+
         RegisteredActors.Add(Alias, ActorGuid);
         return true;
     }
