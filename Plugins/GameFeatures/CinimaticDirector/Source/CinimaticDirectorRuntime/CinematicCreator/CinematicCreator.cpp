@@ -14,30 +14,15 @@ void UCinematicCreator::InitializeCreator()
 bool UCinematicCreator::RegisterPossessableActor(AActor* Actor, FName Alias)
 {
     if (!Actor || !Sequence) return false;
-    
     UMovieScene* MovieScene = Sequence->GetMovieScene();
-    
-    
     FString ActorName = Actor->GetName();
     FGuid ActorGuid = MovieScene->AddPossessable(ActorName, Actor->GetClass());
-    
-    //FGuid ActorGuid = MovieScene->AddPossessable(Actor->GetActorLabel(), Actor->GetClass());
-    
-    /*
-    #if WITH_EDITOR
-        FGuid ActorGuid = MovieScene->AddPossessable(Actor->GetActorLabel(), Actor->GetClass());
-    #else
-        // В Shipping логика может быть другой, либо оставьте пустым
-        FGuid ActorGuid; 
-    #endif*/
-    
-    
     Sequence->BindPossessableObject(ActorGuid, *Actor, GetWorld());
-    
-    
     RegisteredActors.Add(Alias, ActorGuid);
     return true;
 }
+
+
 
 bool UCinematicCreator::RegisterSpawnableActor(TSubclassOf<AActor> ActorClass, FName Alias)
 {

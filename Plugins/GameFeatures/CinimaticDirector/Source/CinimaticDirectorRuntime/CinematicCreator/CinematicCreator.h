@@ -16,7 +16,7 @@ public:
 	// Регистрация уже существующего актора (Possessable)
 	UFUNCTION(BlueprintCallable, Category = "Cinematic")
 	bool RegisterPossessableActor(AActor* Actor, FName Alias);
-
+	
 	// Регистрация актора, который будет создан синематиком (Spawnable)
 	UFUNCTION(BlueprintCallable, Category = "Cinematic")
 	bool RegisterSpawnableActor(TSubclassOf<AActor> ActorClass, FName Alias);
