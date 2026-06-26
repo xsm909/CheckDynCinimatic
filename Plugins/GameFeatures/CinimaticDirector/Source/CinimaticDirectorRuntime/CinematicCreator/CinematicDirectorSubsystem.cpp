@@ -1,4 +1,4 @@
-﻿#include "CinematicDirectorSubsystem.h"
+#include "CinematicDirectorSubsystem.h"
 
 #include "LevelSequenceActor.h"
 #include "LevelSequencePlayer.h"
@@ -90,21 +90,15 @@ bool UCinematicDirectorSubsystem::SaveCinematicByIndex(int32 Index, FString Asse
     TargetPackage->FullyLoad(); // КРИТИЧНО: чтобы избежать "partially loaded"
     TargetPackage->SetFlags(RF_Public | RF_Standalone);
 
-    // 3. Создание новой секвенции
-    // Не вызываем Initialize(), так как мы подменим MovieScene
-    ULevelSequence* NewSequence = NewObject<ULevelSequence>(TargetPackage, *AssetName, RF_Public | RF_Standalone | RF_Transactional);
-
-    // 4. Безопасное копирование данных (MovieScene)
-    UMovieScene* OldMovieScene = SourceSequence->GetMovieScene();
+    // 3. Полное дублирование секвенции (вместе с MovieScene и всеми биндингами акторов)
+    FObjectDuplicationParameters Params(SourceSequence, TargetPackage);
+    Params.DestName = FName(*AssetName);
+    // Убираем флаг Transient, чтобы ассет и его внутренние объекты могли сохраниться
+    Params.FlagMask = RF_AllFlags & ~RF_Transient;
+    Params.ApplyFlags = RF_Public | RF_Standalone | RF_Transactional;
     
-    // Используем параметры дублирования для корректного переноса ссылок
-    FObjectDuplicationParameters Params(OldMovieScene, NewSequence);
-    Params.DestName = OldMovieScene->GetFName();
-    
-    UMovieScene* ClonedMovieScene = Cast<UMovieScene>(StaticDuplicateObjectEx(Params));
-    
-    // Привязываем склонированную сцену к новой секвенции
-    NewSequence->MovieScene = ClonedMovieScene;
+    ULevelSequence* NewSequence = Cast<ULevelSequence>(StaticDuplicateObjectEx(Params));
+    if (!NewSequence) return false;
 
     // 5. Финализация ассета
     NewSequence->MarkPackageDirty();
