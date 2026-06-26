@@ -18,12 +18,19 @@ bool UCinematicCreator::RegisterPossessableActor(AActor* Actor, FName Alias)
     UMovieScene* MovieScene = Sequence->GetMovieScene();
     
     
+    FString ActorName = Actor->GetName();
+    FGuid ActorGuid = MovieScene->AddPossessable(ActorName, Actor->GetClass());
+    
+    //FGuid ActorGuid = MovieScene->AddPossessable(Actor->GetActorLabel(), Actor->GetClass());
+    
+    /*
     #if WITH_EDITOR
         FGuid ActorGuid = MovieScene->AddPossessable(Actor->GetActorLabel(), Actor->GetClass());
     #else
         // В Shipping логика может быть другой, либо оставьте пустым
         FGuid ActorGuid; 
-    #endif
+    #endif*/
+    
     
     Sequence->BindPossessableObject(ActorGuid, *Actor, GetWorld());
     
