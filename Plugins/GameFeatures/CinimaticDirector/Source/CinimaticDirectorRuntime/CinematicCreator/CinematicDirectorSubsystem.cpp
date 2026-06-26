@@ -72,78 +72,52 @@ bool UCinematicDirectorSubsystem::SaveCinematicByIndex(int32 Index, FString Asse
     if (!ActiveCinematics.IsValidIndex(Index)) return false;
     
     UCinematicCreator* Creator = ActiveCinematics[Index];
-    ULevelSequence* Sequence = Creator ? Creator->GetSequence() : nullptr;
+    ULevelSequence* SourceSequence = Creator ? Creator->GetSequence() : nullptr;
     
-    if (!Sequence || !Sequence->GetMovieScene())
-    {
-        UE_LOG(LogTemp, Error, TEXT("SaveCinematicByIndex: Sequence or MovieScene is null!"));
-        return false;
-    }
+    if (!SourceSequence || !SourceSequence->GetMovieScene()) return false;
 
-    // 1. Нормализация путей
+    // 1. Подготовка пути
     FString CleanPath = PackagePath.TrimStartAndEnd();
     if (CleanPath.IsEmpty()) CleanPath = TEXT("/Game/Cinematics");
-    if (!CleanPath.StartsWith(TEXT("/"))) CleanPath = TEXT("/") + CleanPath;
-    if (!CleanPath.StartsWith(TEXT("/Game"))) CleanPath = TEXT("/Game") + CleanPath;
-
-    FString FullPackagePath = FPaths::Combine(*CleanPath, *AssetName);
+    FString FullPackagePath = FPaths::Combine(CleanPath, AssetName);
     FString PhysicalFilePath = FPackageName::LongPackageNameToFilename(FullPackagePath, FPackageName::GetAssetPackageExtension());
-    PhysicalFilePath = FPaths::ConvertRelativePathToFull(PhysicalFilePath);
 
-    // 2. Работа с пакетом
-    UPackage* TargetPackage = FindPackage(nullptr, *FullPackagePath);
-    if (TargetPackage)
-    {
-        UObject* OldAsset = FindObject<UObject>(TargetPackage, *AssetName);
-        if (OldAsset)
-        {
-            FString TrashName = FString::Printf(TEXT("OLD_%s_%s"), *AssetName, *FGuid::NewGuid().ToString());
-            OldAsset->Rename(*TrashName, GetTransientPackage(), REN_DontCreateRedirectors);
-        }
-    }
-    else
-    {
-        TargetPackage = CreatePackage(*FullPackagePath);
-    }
-
+    // 2. Создание или очистка пакета
+    UPackage* TargetPackage = CreatePackage(*FullPackagePath);
+    TargetPackage->FullyLoad(); // КРИТИЧНО: чтобы избежать "partially loaded"
     TargetPackage->SetFlags(RF_Public | RF_Standalone);
 
-    // 3. Создание новой секвенции в пакете
+    // 3. Создание новой секвенции
+    // Не вызываем Initialize(), так как мы подменим MovieScene
     ULevelSequence* NewSequence = NewObject<ULevelSequence>(TargetPackage, *AssetName, RF_Public | RF_Standalone | RF_Transactional);
-    NewSequence->Initialize(); 
 
-	// 4. КОПИРУЕМ ДАННЫЕ БЕЗОПАСНО
-	if (NewSequence->GetMovieScene())
-	{
-		// Вместо StaticDuplicateObject используем создание копии через копирование свойств
-		// Это предотвращает крэши из-за связей с "мертвыми" объектами
-		UMovieScene* OldMovieScene = Sequence->GetMovieScene();
+    // 4. Безопасное копирование данных (MovieScene)
+    UMovieScene* OldMovieScene = SourceSequence->GetMovieScene();
     
-		// Дублируем MovieScene в новый пакет
-		UMovieScene* ClonedMovieScene = DuplicateObject<UMovieScene>(OldMovieScene, NewSequence, *OldMovieScene->GetName());
+    // Используем параметры дублирования для корректного переноса ссылок
+    FObjectDuplicationParameters Params(OldMovieScene, NewSequence);
+    Params.DestName = OldMovieScene->GetFName();
     
-		// ПРИНУДИТЕЛЬНО ПЕРЕПРИВЯЗЫВАЕМ СЕКВЕНЦИЮ К НОВОЙ СЦЕНЕ
-		NewSequence->MovieScene = ClonedMovieScene; 
+    UMovieScene* ClonedMovieScene = Cast<UMovieScene>(StaticDuplicateObjectEx(Params));
     
-		// ЭТОТ ШАГ КРИТИЧЕН: Если объект Spawnable, нужно обновить все ссылки внутри
-		// Иначе при сохранении движок крашится, пытаясь сериализовать указатель на старый объект
-		ClonedMovieScene->Rename(*OldMovieScene->GetName(), NewSequence);
-	}
-	
+    // Привязываем склонированную сцену к новой секвенции
+    NewSequence->MovieScene = ClonedMovieScene;
+
+    // 5. Финализация ассета
     NewSequence->MarkPackageDirty();
+    FAssetRegistryModule::AssetCreated(NewSequence);
     NewSequence->PostEditChange();
 
-    // 5. Сохранение
+    // 6. Сохранение
     FSavePackageArgs SaveArgs;
     SaveArgs.TopLevelFlags = RF_Public | RF_Standalone;
-    SaveArgs.SaveFlags = SAVE_None;
+    SaveArgs.SaveFlags = SAVE_NoError; // Можно добавить SAVE_KeepGUID, если нужно сохранять ID
     
-    bool bSavedOnDisk = UPackage::SavePackage(TargetPackage, NewSequence, *PhysicalFilePath, SaveArgs);
+    bool bSaved = UPackage::SavePackage(TargetPackage, NewSequence, *PhysicalFilePath, SaveArgs);
 
-    if (bSavedOnDisk)
+    if (bSaved)
     {
-        FAssetRegistryModule::AssetCreated(NewSequence);
-        UE_LOG(LogTemp, Log, TEXT("!!! SUCCESS !!! FILE GENERATED: %s"), *PhysicalFilePath);
+        UE_LOG(LogTemp, Log, TEXT("Cinematic saved successfully: %s"), *PhysicalFilePath);
         return true;
     }
 
