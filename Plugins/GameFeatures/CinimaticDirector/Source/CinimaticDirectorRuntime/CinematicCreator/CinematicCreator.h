@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "CoreMinimal.h"
 #include "CinematicTypes.h"
@@ -20,6 +20,12 @@ public:
 	// Регистрация актора, который будет создан синематиком (Spawnable)
 	UFUNCTION(BlueprintCallable, Category = "Cinematic")
 	bool RegisterSpawnableActor(TSubclassOf<AActor> ActorClass, FName Alias);
+	
+	UFUNCTION(BlueprintCallable, Category = "Cinematic")
+	bool RegisterSpawnableSkeletalMeshActor(class USkeletalMesh* Mesh, FName Alias);
+
+	UFUNCTION(BlueprintCallable, Category = "Cinematic")
+	bool RegisterSpawnableStaticMeshActor(class UStaticMesh* Mesh, FName Alias);
 	
 	
 	UFUNCTION(BlueprintCallable, Category = "Cinematic")

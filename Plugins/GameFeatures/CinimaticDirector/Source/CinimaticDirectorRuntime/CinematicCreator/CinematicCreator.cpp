@@ -2,10 +2,13 @@
 #include "MovieScene.h"
 #include "Tracks/MovieScene3DTransformTrack.h"
 #include "Sections/MovieScene3DTransformSection.h"
-#include "Channels/MovieSceneDoubleChannel.h" // Убедитесь, что это есть
 #include "Channels/MovieSceneFloatChannel.h"
 #include "Tracks/MovieSceneSpawnTrack.h"
 #include "Sections/MovieSceneSpawnSection.h"
+#include "Animation/SkeletalMeshActor.h"
+#include "Engine/StaticMeshActor.h"
+#include "Components/SkeletalMeshComponent.h"
+#include "Components/StaticMeshComponent.h"
 
 void UCinematicCreator::InitializeCreator()
 {
@@ -45,6 +48,79 @@ bool UCinematicCreator::RegisterSpawnableActor(TSubclassOf<AActor> ActorClass, F
     if (ActorGuid.IsValid())
     {
         // 3. Добавляем трек спавна, чтобы актор гарантированно спавнился в рантайме
+        UMovieSceneSpawnTrack* SpawnTrack = MovieScene->AddTrack<UMovieSceneSpawnTrack>(ActorGuid);
+        if (SpawnTrack)
+        {
+            UMovieSceneSpawnSection* SpawnSection = Cast<UMovieSceneSpawnSection>(SpawnTrack->CreateNewSection());
+            if (SpawnSection)
+            {
+                SpawnSection->SetRange(TRange<FFrameNumber>::All());
+                SpawnTrack->AddSection(*SpawnSection);
+            }
+        }
+
+        RegisteredActors.Add(Alias, ActorGuid);
+        return true;
+    }
+    
+    return false;
+}
+
+bool UCinematicCreator::RegisterSpawnableSkeletalMeshActor(USkeletalMesh* Mesh, FName Alias)
+{
+    if (!Mesh || !Sequence) return false;
+
+    UMovieScene* MovieScene = Sequence->GetMovieScene();
+    
+    ASkeletalMeshActor* SpawnTemplate = NewObject<ASkeletalMeshActor>(GetTransientPackage(), ASkeletalMeshActor::StaticClass(), NAME_None);
+    if (!SpawnTemplate) return false;
+
+    if (SpawnTemplate->GetSkeletalMeshComponent())
+    {
+        SpawnTemplate->GetSkeletalMeshComponent()->SetSkeletalMesh(Mesh);
+    }
+
+    FGuid ActorGuid = MovieScene->AddSpawnable(Alias.ToString(), *SpawnTemplate);
+    
+    if (ActorGuid.IsValid())
+    {
+        UMovieSceneSpawnTrack* SpawnTrack = MovieScene->AddTrack<UMovieSceneSpawnTrack>(ActorGuid);
+        if (SpawnTrack)
+        {
+            UMovieSceneSpawnSection* SpawnSection = Cast<UMovieSceneSpawnSection>(SpawnTrack->CreateNewSection());
+            if (SpawnSection)
+            {
+                SpawnSection->SetRange(TRange<FFrameNumber>::All());
+                SpawnTrack->AddSection(*SpawnSection);
+            }
+        }
+
+        RegisteredActors.Add(Alias, ActorGuid);
+        return true;
+    }
+    
+    return false;
+}
+
+
+bool UCinematicCreator::RegisterSpawnableStaticMeshActor(UStaticMesh* Mesh, FName Alias)
+{
+    if (!Mesh || !Sequence) return false;
+
+    UMovieScene* MovieScene = Sequence->GetMovieScene();
+    
+    AStaticMeshActor* SpawnTemplate = NewObject<AStaticMeshActor>(GetTransientPackage(), AStaticMeshActor::StaticClass(), NAME_None);
+    if (!SpawnTemplate) return false;
+
+    if (SpawnTemplate->GetStaticMeshComponent())
+    {
+        SpawnTemplate->GetStaticMeshComponent()->SetStaticMesh(Mesh);
+    }
+
+    FGuid ActorGuid = MovieScene->AddSpawnable(Alias.ToString(), *SpawnTemplate);
+    
+    if (ActorGuid.IsValid())
+    {
         UMovieSceneSpawnTrack* SpawnTrack = MovieScene->AddTrack<UMovieSceneSpawnTrack>(ActorGuid);
         if (SpawnTrack)
         {
