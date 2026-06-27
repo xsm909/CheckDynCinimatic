@@ -183,7 +183,7 @@ void UCinematicCreator::SetCinematicDuration(float DurationInSeconds)
 #endif
 }
 
-void UCinematicCreator::AddTransformKey(FName Alias, FTransform Transform, float Time, ECinematicInterpType Interp)
+void UCinematicCreator::AddTransformKey(FName Alias, FTransform Transform, float Time, ECinematicInterpType Interp, bool bLimitSectionToKeys)
 {
     FGuid* ActorGuid = RegisteredActors.Find(Alias);
     if (!ActorGuid || !Sequence || !Sequence->GetMovieScene()) return;
@@ -207,7 +207,14 @@ void UCinematicCreator::AddTransformKey(FName Alias, FTransform Transform, float
     {
         Section = Cast<UMovieScene3DTransformSection>(Track->CreateNewSection());
         Track->AddSection(*Section);
-        Section->SetRange(TRange<FFrameNumber>::All());
+        if (bLimitSectionToKeys)
+        {
+            Section->SetRange(TRange<FFrameNumber>::Empty());
+        }
+        else
+        {
+            Section->SetRange(TRange<FFrameNumber>::All());
+        }
     }
 
     if (!Section) return;
@@ -216,10 +223,37 @@ void UCinematicCreator::AddTransformKey(FName Alias, FTransform Transform, float
     FFrameRate TickResolution = MovieScene->GetTickResolution();
     FFrameNumber FrameNumber = (Time * TickResolution).FrameNumber;
 
-    // Подготавливаем значения
-    double Values[6] = { 
+    if (bLimitSectionToKeys)
+    {
+        // Обновляем диапазон секции, чтобы он покрывал только ключи (включительно!)
+        TRange<FFrameNumber> CurrentRange = Section->GetRange();
+        if (CurrentRange.IsEmpty() || CurrentRange == TRange<FFrameNumber>::All())
+        {
+            Section->SetRange(TRange<FFrameNumber>(
+                TRangeBound<FFrameNumber>::Inclusive(FrameNumber), 
+                TRangeBound<FFrameNumber>::Inclusive(FrameNumber)
+            ));
+        }
+        else
+        {
+            FFrameNumber Lower = FMath::Min(CurrentRange.GetLowerBoundValue(), FrameNumber);
+            FFrameNumber Upper = FMath::Max(CurrentRange.GetUpperBoundValue(), FrameNumber);
+            Section->SetRange(TRange<FFrameNumber>(
+                TRangeBound<FFrameNumber>::Inclusive(Lower), 
+                TRangeBound<FFrameNumber>::Inclusive(Upper)
+            ));
+        }
+    }
+    else
+    {
+        Section->SetRange(TRange<FFrameNumber>::All());
+    }
+
+    // Подготавливаем значения (включая масштаб)
+    double Values[9] = { 
         Transform.GetLocation().X, Transform.GetLocation().Y, Transform.GetLocation().Z,
-        Transform.Rotator().Roll, Transform.Rotator().Pitch, Transform.Rotator().Yaw 
+        Transform.Rotator().Roll, Transform.Rotator().Pitch, Transform.Rotator().Yaw,
+        Transform.GetScale3D().X, Transform.GetScale3D().Y, Transform.GetScale3D().Z 
     };
 
     // Определяем тип интерполяции
@@ -230,22 +264,18 @@ void UCinematicCreator::AddTransformKey(FName Alias, FTransform Transform, float
     // Доступ к каналам через прокси
     FMovieSceneChannelProxy& ChannelProxy = Section->GetChannelProxy();
     
-    // В UE5.7 3DTransform секция имеет индексы 0-5
-    for(int i = 0; i < 6; ++i)
+    // В UE5 3DTransform секция имеет индексы 0-8 (добавлен масштаб 6-8)
+    for(int i = 0; i < 9; ++i)
     {
         FMovieSceneDoubleChannel* Channel = ChannelProxy.GetChannel<FMovieSceneDoubleChannel>(i);
         if (Channel)
         {
-            // Создаем структуру значения, так как современный API требует FMovieSceneDoubleValue
             FMovieSceneDoubleValue NewValue;
             NewValue.Value = Values[i];
             NewValue.InterpMode = CurveInterp;
 
             // Добавляем ключ
             Channel->GetData().AddKey(FrameNumber, NewValue);
-            
-            // Сортируем ключи, чтобы Sequencer их корректно отобразил
-            
         }
     }
 
@@ -444,6 +474,119 @@ void UCinematicCreator::AddStringPropertyKey(FName Alias, FName PropertyName, co
     UpdatePlaybackRange();
 }
 
+void UCinematicCreator::AddTransformPropertyKey(FName Alias, FName PropertyName, FTransform Value, float Time, ECinematicInterpType Interp)
+{
+    FGuid* ActorGuid = RegisteredActors.Find(Alias);
+    if (!ActorGuid || !Sequence || !Sequence->GetMovieScene()) return;
+
+    UMovieScene* MovieScene = Sequence->GetMovieScene();
+
+    // Ищем существующий трек
+    UMovieScene3DTransformTrack* Track = nullptr;
+    for (UMovieSceneTrack* ExistingTrack : MovieScene->FindTracks(UMovieScene3DTransformTrack::StaticClass(), *ActorGuid))
+    {
+        if (UMovieScene3DTransformTrack* TransformTrack = Cast<UMovieScene3DTransformTrack>(ExistingTrack))
+        {
+            if (TransformTrack->GetPropertyName() == PropertyName)
+            {
+                Track = TransformTrack;
+                break;
+            }
+        }
+    }
+
+    // Создаём новый трек, если не нашли
+    if (!Track)
+    {
+        Track = MovieScene->AddTrack<UMovieScene3DTransformTrack>(*ActorGuid);
+        if (Track)
+        {
+            Track->SetPropertyNameAndPath(PropertyName, PropertyName.ToString());
+        }
+    }
+
+    if (!Track) return;
+
+    // Берём или создаём секцию
+    UMovieSceneSection* Section = nullptr;
+    if (Track->GetAllSections().Num() > 0)
+    {
+        Section = Track->GetAllSections()[0];
+    }
+    else
+    {
+        Section = Track->CreateNewSection();
+        Track->AddSection(*Section);
+        Section->SetRange(TRange<FFrameNumber>::All());
+    }
+
+    if (!Section) return;
+
+    FFrameRate TickResolution = MovieScene->GetTickResolution();
+    FFrameNumber FrameNumber = (Time * TickResolution).FrameNumber;
+
+    ERichCurveInterpMode CurveInterp = ERichCurveInterpMode::RCIM_Linear;
+    if (Interp == ECinematicInterpType::Constant) CurveInterp = ERichCurveInterpMode::RCIM_Constant;
+    else if (Interp == ECinematicInterpType::Cubic) CurveInterp = ERichCurveInterpMode::RCIM_Cubic;
+
+    // Получаем канал-прокси
+    FMovieSceneChannelProxy& ChannelProxy = Section->GetChannelProxy();
+
+    // Translation (0-2)
+    {
+        FVector Location = Value.GetLocation();
+        double Values[3] = { Location.X, Location.Y, Location.Z };
+        for (int32 i = 0; i < 3; ++i)
+        {
+            FMovieSceneDoubleChannel* Channel = ChannelProxy.GetChannel<FMovieSceneDoubleChannel>(i);
+            if (Channel)
+            {
+                FMovieSceneDoubleValue NewValue;
+                NewValue.Value = Values[i];
+                NewValue.InterpMode = CurveInterp;
+                Channel->GetData().AddKey(FrameNumber, NewValue);
+            }
+        }
+    }
+
+    // Rotation (3-5) — в Euler (Roll, Pitch, Yaw)
+    {
+        FRotator Rotation = Value.Rotator(); // или Value.GetRotation().Rotator()
+        double Values[3] = { Rotation.Roll, Rotation.Pitch, Rotation.Yaw };
+        for (int32 i = 0; i < 3; ++i)
+        {
+            FMovieSceneDoubleChannel* Channel = ChannelProxy.GetChannel<FMovieSceneDoubleChannel>(3 + i);
+            if (Channel)
+            {
+                FMovieSceneDoubleValue NewValue;
+                NewValue.Value = Values[i];
+                NewValue.InterpMode = CurveInterp;
+                Channel->GetData().AddKey(FrameNumber, NewValue);
+            }
+        }
+    }
+
+    // Scale (6-8)
+    {
+        FVector Scale = Value.GetScale3D();
+        double Values[3] = { Scale.X, Scale.Y, Scale.Z };
+        for (int32 i = 0; i < 3; ++i)
+        {
+            FMovieSceneDoubleChannel* Channel = ChannelProxy.GetChannel<FMovieSceneDoubleChannel>(6 + i);
+            if (Channel)
+            {
+                FMovieSceneDoubleValue NewValue;
+                NewValue.Value = Values[i];
+                NewValue.InterpMode = CurveInterp;
+                Channel->GetData().AddKey(FrameNumber, NewValue);
+            }
+        }
+    }
+
+    Section->Modify();
+    Track->Modify();
+    UpdatePlaybackRange();
+}
 void UCinematicCreator::AddVectorPropertyKey(FName Alias, FName PropertyName, FVector Value, float Time, ECinematicInterpType Interp)
 {
     FGuid* ActorGuid = RegisteredActors.Find(Alias);

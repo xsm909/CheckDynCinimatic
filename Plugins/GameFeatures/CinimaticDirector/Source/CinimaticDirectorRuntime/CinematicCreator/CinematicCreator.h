@@ -33,7 +33,7 @@ public:
 	void SetCinematicDuration(float DurationInSeconds);
 
 	UFUNCTION(BlueprintCallable, Category = "Cinematic")
-	void AddTransformKey(FName Alias, FTransform Transform, float Time, ECinematicInterpType Interp);
+	void AddTransformKey(FName Alias, FTransform Transform, float Time, ECinematicInterpType Interp, bool bLimitSectionToKeys = true);
 
 	UFUNCTION(BlueprintCallable, Category = "Cinematic|Variables")
 	void AddFloatPropertyKey(FName Alias, FName PropertyName, float Value, float Time, ECinematicInterpType Interp);
@@ -43,6 +43,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Cinematic|Variables")
 	void AddStringPropertyKey(FName Alias, FName PropertyName, const FString& Value, float Time);
+
+	UFUNCTION(BlueprintCallable, Category = "Cinematic|Variables")
+	void AddTransformPropertyKey(FName Alias, FName PropertyName, FTransform Value, float Time, ECinematicInterpType Interp);
 
 	UFUNCTION(BlueprintCallable, Category = "Cinematic|Variables")
 	void AddVectorPropertyKey(FName Alias, FName PropertyName, FVector Value, float Time, ECinematicInterpType Interp);
