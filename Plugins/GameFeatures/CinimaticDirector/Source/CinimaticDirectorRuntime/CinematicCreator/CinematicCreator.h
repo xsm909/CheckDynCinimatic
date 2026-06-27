@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "CinematicTypes.h"
+#include "StructUtils/InstancedStruct.h"
 #include "LevelSequence.h"
 #include "CinematicCreator.generated.h"
 
@@ -48,6 +49,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Cinematic|Variables")
 	void AddRotatorPropertyKey(FName Alias, FName PropertyName, FRotator Value, float Time, ECinematicInterpType Interp);
+
+	UFUNCTION(BlueprintPure, Category = "Cinematic|Helpers")
+	static FString InstancedStructToString(const FInstancedStruct& InStruct);
+
+	UFUNCTION(BlueprintPure, Category = "Cinematic|Helpers")
+	static FInstancedStruct StringToInstancedStruct(const FString& InString);
 
 	void UpdatePlaybackRange();
 

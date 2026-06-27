@@ -22,6 +22,9 @@
 #include "Channels/MovieSceneStringChannel.h"
 #include "Tracks/MovieSceneVectorTrack.h"
 #include "Tracks/MovieSceneRotatorTrack.h"
+#include "JsonObjectConverter.h"
+#include "Serialization/JsonSerializer.h"
+
 void UCinematicCreator::InitializeCreator()
 {
     Sequence = NewObject<ULevelSequence>(this, NAME_None, RF_Transient);
@@ -659,4 +662,48 @@ void UCinematicCreator::FlushChanges()
             }
         }
     }
+}
+
+FString UCinematicCreator::InstancedStructToString(const FInstancedStruct& InStruct)
+{
+    const UScriptStruct* ScriptStruct = InStruct.GetScriptStruct();
+    if (!ScriptStruct) return FString();
+
+    FString JsonString;
+    if (FJsonObjectConverter::UStructToJsonObjectString(ScriptStruct, InStruct.GetMemory(), JsonString, 0, 0))
+    {
+        return FString::Printf(TEXT("%s||%s"), *ScriptStruct->GetPathName(), *JsonString);
+    }
+    return FString();
+}
+
+FInstancedStruct UCinematicCreator::StringToInstancedStruct(const FString& InString)
+{
+    FString StructPath;
+    FString JsonString;
+    if (InString.Split(TEXT("||"), &StructPath, &JsonString))
+    {
+        UScriptStruct* ScriptStruct = FindObject<UScriptStruct>(nullptr, *StructPath);
+        if (!ScriptStruct)
+        {
+            ScriptStruct = LoadObject<UScriptStruct>(nullptr, *StructPath);
+        }
+        
+        if (ScriptStruct)
+        {
+            FInstancedStruct OutStruct;
+            OutStruct.InitializeAs(ScriptStruct);
+            
+            TSharedPtr<FJsonObject> JsonObject;
+            TSharedRef<TJsonReader<>> JsonReader = TJsonReaderFactory<>::Create(JsonString);
+            if (FJsonSerializer::Deserialize(JsonReader, JsonObject) && JsonObject.IsValid())
+            {
+                if (FJsonObjectConverter::JsonObjectToUStruct(JsonObject.ToSharedRef(), ScriptStruct, OutStruct.GetMutableMemory(), 0, 0))
+                {
+                    return OutStruct;
+                }
+            }
+        }
+    }
+    return FInstancedStruct();
 }
