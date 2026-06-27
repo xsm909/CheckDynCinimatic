@@ -9,6 +9,14 @@
 #include "Engine/StaticMeshActor.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "Tracks/MovieSceneDoubleTrack.h"
+#include "Tracks/MovieSceneBoolTrack.h"
+#include "Tracks/MovieSceneStringTrack.h"
+#include "Tracks/MovieSceneVectorTrack.h"
+#include "Tracks/MovieSceneRotatorTrack.h"
+#include "Channels/MovieSceneBoolChannel.h"
+#include "Channels/MovieSceneStringChannel.h"
+#include "Channels/MovieSceneDoubleChannel.h"
 
 void UCinematicCreator::InitializeCreator()
 {
@@ -239,6 +247,338 @@ void UCinematicCreator::AddTransformKey(FName Alias, FTransform Transform, float
     Track->Modify();
     
     // Опционально: обновляем диапазон воспроизведения, если ключ вышел за пределы
+    UpdatePlaybackRange();
+}
+
+void UCinematicCreator::AddFloatPropertyKey(FName Alias, FName PropertyName, float Value, float Time, ECinematicInterpType Interp)
+{
+    FGuid* ActorGuid = RegisteredActors.Find(Alias);
+    if (!ActorGuid || !Sequence || !Sequence->GetMovieScene()) return;
+
+    UMovieScene* MovieScene = Sequence->GetMovieScene();
+    
+    UMovieSceneDoubleTrack* Track = nullptr;
+    for (UMovieSceneTrack* ExistingTrack : MovieScene->GetTracks())
+    {
+        if (UMovieSceneDoubleTrack* DoubleTrack = Cast<UMovieSceneDoubleTrack>(ExistingTrack))
+        {
+            if (DoubleTrack->GetPropertyName() == PropertyName)
+            {
+                Track = DoubleTrack;
+                break;
+            }
+        }
+    }
+    
+    if (!Track) 
+    {
+        Track = MovieScene->AddTrack<UMovieSceneDoubleTrack>(*ActorGuid);
+        if (Track)
+        {
+            Track->SetPropertyNameAndPath(PropertyName, PropertyName.ToString());
+        }
+    }
+
+    if (!Track) return;
+
+    UMovieSceneSection* Section = nullptr;
+    if (Track->GetAllSections().Num() > 0)
+    {
+        Section = Track->GetAllSections()[0];
+    }
+    else
+    {
+        Section = Track->CreateNewSection();
+        Track->AddSection(*Section);
+        Section->SetRange(TRange<FFrameNumber>::All());
+    }
+
+    if (!Section) return;
+
+    FFrameRate TickResolution = MovieScene->GetTickResolution();
+    FFrameNumber FrameNumber = (Time * TickResolution).FrameNumber;
+
+    ERichCurveInterpMode CurveInterp = ERichCurveInterpMode::RCIM_Linear;
+    if (Interp == ECinematicInterpType::Constant) CurveInterp = ERichCurveInterpMode::RCIM_Constant;
+    else if (Interp == ECinematicInterpType::Cubic) CurveInterp = ERichCurveInterpMode::RCIM_Cubic;
+
+    FMovieSceneChannelProxy& ChannelProxy = Section->GetChannelProxy();
+    FMovieSceneDoubleChannel* Channel = ChannelProxy.GetChannel<FMovieSceneDoubleChannel>(0);
+    if (Channel)
+    {
+        FMovieSceneDoubleValue NewValue;
+        NewValue.Value = Value;
+        NewValue.InterpMode = CurveInterp;
+        Channel->GetData().AddKey(FrameNumber, NewValue);
+    }
+
+    Section->Modify();
+    Track->Modify();
+    UpdatePlaybackRange();
+}
+
+void UCinematicCreator::AddBoolPropertyKey(FName Alias, FName PropertyName, bool bValue, float Time)
+{
+    FGuid* ActorGuid = RegisteredActors.Find(Alias);
+    if (!ActorGuid || !Sequence || !Sequence->GetMovieScene()) return;
+
+    UMovieScene* MovieScene = Sequence->GetMovieScene();
+    
+    UMovieSceneBoolTrack* Track = nullptr;
+    for (UMovieSceneTrack* ExistingTrack : MovieScene->GetTracks())
+    {
+        if (UMovieSceneBoolTrack* BoolTrack = Cast<UMovieSceneBoolTrack>(ExistingTrack))
+        {
+            if (BoolTrack->GetPropertyName() == PropertyName)
+            {
+                Track = BoolTrack;
+                break;
+            }
+        }
+    }
+    
+    if (!Track) 
+    {
+        Track = MovieScene->AddTrack<UMovieSceneBoolTrack>(*ActorGuid);
+        if (Track)
+        {
+            Track->SetPropertyNameAndPath(PropertyName, PropertyName.ToString());
+        }
+    }
+
+    if (!Track) return;
+
+    UMovieSceneSection* Section = nullptr;
+    if (Track->GetAllSections().Num() > 0)
+    {
+        Section = Track->GetAllSections()[0];
+    }
+    else
+    {
+        Section = Track->CreateNewSection();
+        Track->AddSection(*Section);
+        Section->SetRange(TRange<FFrameNumber>::All());
+    }
+
+    if (!Section) return;
+
+    FFrameRate TickResolution = MovieScene->GetTickResolution();
+    FFrameNumber FrameNumber = (Time * TickResolution).FrameNumber;
+
+    FMovieSceneChannelProxy& ChannelProxy = Section->GetChannelProxy();
+    FMovieSceneBoolChannel* Channel = ChannelProxy.GetChannel<FMovieSceneBoolChannel>(0);
+    if (Channel)
+    {
+        Channel->GetData().AddKey(FrameNumber, bValue);
+    }
+
+    Section->Modify();
+    Track->Modify();
+    UpdatePlaybackRange();
+}
+
+void UCinematicCreator::AddStringPropertyKey(FName Alias, FName PropertyName, const FString& Value, float Time)
+{
+    FGuid* ActorGuid = RegisteredActors.Find(Alias);
+    if (!ActorGuid || !Sequence || !Sequence->GetMovieScene()) return;
+
+    UMovieScene* MovieScene = Sequence->GetMovieScene();
+    
+    UMovieSceneStringTrack* Track = nullptr;
+    for (UMovieSceneTrack* ExistingTrack : MovieScene->GetTracks())
+    {
+        if (UMovieSceneStringTrack* StringTrack = Cast<UMovieSceneStringTrack>(ExistingTrack))
+        {
+            if (StringTrack->GetPropertyName() == PropertyName)
+            {
+                Track = StringTrack;
+                break;
+            }
+        }
+    }
+    
+    if (!Track) 
+    {
+        Track = MovieScene->AddTrack<UMovieSceneStringTrack>(*ActorGuid);
+        if (Track)
+        {
+            Track->SetPropertyNameAndPath(PropertyName, PropertyName.ToString());
+        }
+    }
+
+    if (!Track) return;
+
+    UMovieSceneSection* Section = nullptr;
+    if (Track->GetAllSections().Num() > 0)
+    {
+        Section = Track->GetAllSections()[0];
+    }
+    else
+    {
+        Section = Track->CreateNewSection();
+        Track->AddSection(*Section);
+        Section->SetRange(TRange<FFrameNumber>::All());
+    }
+
+    if (!Section) return;
+
+    FFrameRate TickResolution = MovieScene->GetTickResolution();
+    FFrameNumber FrameNumber = (Time * TickResolution).FrameNumber;
+
+    FMovieSceneChannelProxy& ChannelProxy = Section->GetChannelProxy();
+    FMovieSceneStringChannel* Channel = ChannelProxy.GetChannel<FMovieSceneStringChannel>(0);
+    if (Channel)
+    {
+        Channel->GetData().AddKey(FrameNumber, Value);
+    }
+
+    Section->Modify();
+    Track->Modify();
+    UpdatePlaybackRange();
+}
+
+void UCinematicCreator::AddVectorPropertyKey(FName Alias, FName PropertyName, FVector Value, float Time, ECinematicInterpType Interp)
+{
+    FGuid* ActorGuid = RegisteredActors.Find(Alias);
+    if (!ActorGuid || !Sequence || !Sequence->GetMovieScene()) return;
+
+    UMovieScene* MovieScene = Sequence->GetMovieScene();
+    
+    UMovieSceneDoubleVectorTrack* Track = nullptr;
+    for (UMovieSceneTrack* ExistingTrack : MovieScene->GetTracks())
+    {
+        if (UMovieSceneDoubleVectorTrack* VecTrack = Cast<UMovieSceneDoubleVectorTrack>(ExistingTrack))
+        {
+            if (VecTrack->GetPropertyName() == PropertyName)
+            {
+                Track = VecTrack;
+                break;
+            }
+        }
+    }
+    
+    if (!Track) 
+    {
+        Track = MovieScene->AddTrack<UMovieSceneDoubleVectorTrack>(*ActorGuid);
+        if (Track)
+        {
+            Track->SetNumChannelsUsed(3);
+            Track->SetPropertyNameAndPath(PropertyName, PropertyName.ToString());
+        }
+    }
+
+    if (!Track) return;
+
+    UMovieSceneSection* Section = nullptr;
+    if (Track->GetAllSections().Num() > 0)
+    {
+        Section = Track->GetAllSections()[0];
+    }
+    else
+    {
+        Section = Track->CreateNewSection();
+        Track->AddSection(*Section);
+        Section->SetRange(TRange<FFrameNumber>::All());
+    }
+
+    if (!Section) return;
+
+    FFrameRate TickResolution = MovieScene->GetTickResolution();
+    FFrameNumber FrameNumber = (Time * TickResolution).FrameNumber;
+
+    ERichCurveInterpMode CurveInterp = ERichCurveInterpMode::RCIM_Linear;
+    if (Interp == ECinematicInterpType::Constant) CurveInterp = ERichCurveInterpMode::RCIM_Constant;
+    else if (Interp == ECinematicInterpType::Cubic) CurveInterp = ERichCurveInterpMode::RCIM_Cubic;
+
+    FMovieSceneChannelProxy& ChannelProxy = Section->GetChannelProxy();
+    
+    double Values[3] = { Value.X, Value.Y, Value.Z };
+    for (int32 i = 0; i < 3; ++i)
+    {
+        FMovieSceneDoubleChannel* Channel = ChannelProxy.GetChannel<FMovieSceneDoubleChannel>(i);
+        if (Channel)
+        {
+            FMovieSceneDoubleValue NewValue;
+            NewValue.Value = Values[i];
+            NewValue.InterpMode = CurveInterp;
+            Channel->GetData().AddKey(FrameNumber, NewValue);
+        }
+    }
+
+    Section->Modify();
+    Track->Modify();
+    UpdatePlaybackRange();
+}
+
+void UCinematicCreator::AddRotatorPropertyKey(FName Alias, FName PropertyName, FRotator Value, float Time, ECinematicInterpType Interp)
+{
+    FGuid* ActorGuid = RegisteredActors.Find(Alias);
+    if (!ActorGuid || !Sequence || !Sequence->GetMovieScene()) return;
+
+    UMovieScene* MovieScene = Sequence->GetMovieScene();
+    
+    UMovieSceneRotatorTrack* Track = nullptr;
+    for (UMovieSceneTrack* ExistingTrack : MovieScene->GetTracks())
+    {
+        if (UMovieSceneRotatorTrack* RotTrack = Cast<UMovieSceneRotatorTrack>(ExistingTrack))
+        {
+            if (RotTrack->GetPropertyName() == PropertyName)
+            {
+                Track = RotTrack;
+                break;
+            }
+        }
+    }
+    
+    if (!Track) 
+    {
+        Track = MovieScene->AddTrack<UMovieSceneRotatorTrack>(*ActorGuid);
+        if (Track)
+        {
+            Track->SetPropertyNameAndPath(PropertyName, PropertyName.ToString());
+        }
+    }
+
+    if (!Track) return;
+
+    UMovieSceneSection* Section = nullptr;
+    if (Track->GetAllSections().Num() > 0)
+    {
+        Section = Track->GetAllSections()[0];
+    }
+    else
+    {
+        Section = Track->CreateNewSection();
+        Track->AddSection(*Section);
+        Section->SetRange(TRange<FFrameNumber>::All());
+    }
+
+    if (!Section) return;
+
+    FFrameRate TickResolution = MovieScene->GetTickResolution();
+    FFrameNumber FrameNumber = (Time * TickResolution).FrameNumber;
+
+    ERichCurveInterpMode CurveInterp = ERichCurveInterpMode::RCIM_Linear;
+    if (Interp == ECinematicInterpType::Constant) CurveInterp = ERichCurveInterpMode::RCIM_Constant;
+    else if (Interp == ECinematicInterpType::Cubic) CurveInterp = ERichCurveInterpMode::RCIM_Cubic;
+
+    FMovieSceneChannelProxy& ChannelProxy = Section->GetChannelProxy();
+    
+    double Values[3] = { Value.Roll, Value.Pitch, Value.Yaw };
+    for (int32 i = 0; i < 3; ++i)
+    {
+        FMovieSceneDoubleChannel* Channel = ChannelProxy.GetChannel<FMovieSceneDoubleChannel>(i);
+        if (Channel)
+        {
+            FMovieSceneDoubleValue NewValue;
+            NewValue.Value = Values[i];
+            NewValue.InterpMode = CurveInterp;
+            Channel->GetData().AddKey(FrameNumber, NewValue);
+        }
+    }
+
+    Section->Modify();
+    Track->Modify();
     UpdatePlaybackRange();
 }
 
