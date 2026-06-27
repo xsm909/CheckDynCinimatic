@@ -4,3 +4,5 @@
 #include "E:/Work/Unreal/CheckDynCinimatic/Plugins/GameFeatures/CinimaticDirector/Intermediate/Build/Win64/UnrealEditor/Inc/CinimaticDirectorRuntime/UHT/CinematicTypes.gen.cpp"
 #include "E:/Work/Unreal/CheckDynCinimatic/Plugins/GameFeatures/CinimaticDirector/Intermediate/Build/Win64/UnrealEditor/Inc/CinimaticDirectorRuntime/UHT/CinimaticDirectorRuntime.init.gen.cpp"
 #include "E:/Work/Unreal/CheckDynCinimatic/Plugins/GameFeatures/CinimaticDirector/Intermediate/Build/Win64/x64/UnrealEditor/Development/CinimaticDirectorRuntime/PerModuleInline.gen.cpp"
+#include "E:/Work/Unreal/CheckDynCinimatic/Plugins/GameFeatures/CinimaticDirector/Source/CinimaticDirectorRuntime/CinematicCreator/CinematicDirectorSubsystem.cpp"
+#include "E:/Work/Unreal/CheckDynCinimatic/Plugins/GameFeatures/CinimaticDirector/Source/CinimaticDirectorRuntime/Private/CinimaticDirectorRuntimeModule.cpp"

@@ -10,14 +10,18 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Tracks/MovieSceneDoubleTrack.h"
+#include "Sections/MovieSceneDoubleSection.h"
+#include "Channels/MovieSceneDoubleChannel.h"
+#include "Tracks/MovieSceneFloatTrack.h"
+#include "Sections/MovieSceneFloatSection.h"
+#include "Channels/MovieSceneFloatChannel.h"
 #include "Tracks/MovieSceneBoolTrack.h"
+#include "Sections/MovieSceneBoolSection.h"
+#include "Channels/MovieSceneBoolChannel.h"
 #include "Tracks/MovieSceneStringTrack.h"
+#include "Channels/MovieSceneStringChannel.h"
 #include "Tracks/MovieSceneVectorTrack.h"
 #include "Tracks/MovieSceneRotatorTrack.h"
-#include "Channels/MovieSceneBoolChannel.h"
-#include "Channels/MovieSceneStringChannel.h"
-#include "Channels/MovieSceneDoubleChannel.h"
-
 void UCinematicCreator::InitializeCreator()
 {
     Sequence = NewObject<ULevelSequence>(this, NAME_None, RF_Transient);
@@ -258,7 +262,7 @@ void UCinematicCreator::AddFloatPropertyKey(FName Alias, FName PropertyName, flo
     UMovieScene* MovieScene = Sequence->GetMovieScene();
     
     UMovieSceneDoubleTrack* Track = nullptr;
-    for (UMovieSceneTrack* ExistingTrack : MovieScene->GetTracks())
+    for (UMovieSceneTrack* ExistingTrack : MovieScene->FindTracks(UMovieSceneDoubleTrack::StaticClass(), *ActorGuid))
     {
         if (UMovieSceneDoubleTrack* DoubleTrack = Cast<UMovieSceneDoubleTrack>(ExistingTrack))
         {
@@ -325,7 +329,7 @@ void UCinematicCreator::AddBoolPropertyKey(FName Alias, FName PropertyName, bool
     UMovieScene* MovieScene = Sequence->GetMovieScene();
     
     UMovieSceneBoolTrack* Track = nullptr;
-    for (UMovieSceneTrack* ExistingTrack : MovieScene->GetTracks())
+    for (UMovieSceneTrack* ExistingTrack : MovieScene->FindTracks(UMovieSceneBoolTrack::StaticClass(), *ActorGuid))
     {
         if (UMovieSceneBoolTrack* BoolTrack = Cast<UMovieSceneBoolTrack>(ExistingTrack))
         {
@@ -385,7 +389,7 @@ void UCinematicCreator::AddStringPropertyKey(FName Alias, FName PropertyName, co
     UMovieScene* MovieScene = Sequence->GetMovieScene();
     
     UMovieSceneStringTrack* Track = nullptr;
-    for (UMovieSceneTrack* ExistingTrack : MovieScene->GetTracks())
+    for (UMovieSceneTrack* ExistingTrack : MovieScene->FindTracks(UMovieSceneStringTrack::StaticClass(), *ActorGuid))
     {
         if (UMovieSceneStringTrack* StringTrack = Cast<UMovieSceneStringTrack>(ExistingTrack))
         {
@@ -445,7 +449,7 @@ void UCinematicCreator::AddVectorPropertyKey(FName Alias, FName PropertyName, FV
     UMovieScene* MovieScene = Sequence->GetMovieScene();
     
     UMovieSceneDoubleVectorTrack* Track = nullptr;
-    for (UMovieSceneTrack* ExistingTrack : MovieScene->GetTracks())
+    for (UMovieSceneTrack* ExistingTrack : MovieScene->FindTracks(UMovieSceneDoubleVectorTrack::StaticClass(), *ActorGuid))
     {
         if (UMovieSceneDoubleVectorTrack* VecTrack = Cast<UMovieSceneDoubleVectorTrack>(ExistingTrack))
         {
@@ -518,7 +522,7 @@ void UCinematicCreator::AddRotatorPropertyKey(FName Alias, FName PropertyName, F
     UMovieScene* MovieScene = Sequence->GetMovieScene();
     
     UMovieSceneRotatorTrack* Track = nullptr;
-    for (UMovieSceneTrack* ExistingTrack : MovieScene->GetTracks())
+    for (UMovieSceneTrack* ExistingTrack : MovieScene->FindTracks(UMovieSceneRotatorTrack::StaticClass(), *ActorGuid))
     {
         if (UMovieSceneRotatorTrack* RotTrack = Cast<UMovieSceneRotatorTrack>(ExistingTrack))
         {
@@ -564,6 +568,7 @@ void UCinematicCreator::AddRotatorPropertyKey(FName Alias, FName PropertyName, F
 
     FMovieSceneChannelProxy& ChannelProxy = Section->GetChannelProxy();
     
+    // Rotator sequence is usually Roll (X), Pitch (Y), Yaw (Z) in Sequencer
     double Values[3] = { Value.Roll, Value.Pitch, Value.Yaw };
     for (int32 i = 0; i < 3; ++i)
     {
@@ -590,6 +595,8 @@ void UCinematicCreator::UpdatePlaybackRange()
     
     // Получаем текущие границы всех треков
     TRange<FFrameNumber> PlaybackRange = MovieScene->GetPlaybackRange();
+
+
     
     // Находим максимальное время среди всех треков, чтобы растянуть таймлайн
     FFrameNumber MaxFrame = FFrameNumber(0);

@@ -33,7 +33,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Cinematic")
 	void AddTransformKey(FName Alias, FTransform Transform, float Time, ECinematicInterpType Interp);
-	
+
 	UFUNCTION(BlueprintCallable, Category = "Cinematic|Variables")
 	void AddFloatPropertyKey(FName Alias, FName PropertyName, float Value, float Time, ECinematicInterpType Interp);
 

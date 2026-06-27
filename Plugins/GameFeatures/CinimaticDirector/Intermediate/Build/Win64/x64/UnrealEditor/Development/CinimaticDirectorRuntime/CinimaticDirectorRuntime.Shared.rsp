@@ -286,6 +286,8 @@
 /I "Editor/AnimationEditMode/Public"
 /I "../Intermediate/Build/Win64/UnrealEditor/Inc/LevelSequence/UHT"
 /I "Runtime/LevelSequence/Public"
+/I "../Plugins/Experimental/StructUtils/Source"
+/I "../Plugins/Experimental/StructUtils/Source/StructUtils/Public"
 /I "../Plugins/MovieScene/LevelSequenceEditor/Intermediate/Build/Win64/UnrealEditor/Inc/LevelSequenceEditor/UHT"
 /I "../Plugins/MovieScene/LevelSequenceEditor/Source"
 /I "../Plugins/MovieScene/LevelSequenceEditor/Source/LevelSequenceEditor/Public"

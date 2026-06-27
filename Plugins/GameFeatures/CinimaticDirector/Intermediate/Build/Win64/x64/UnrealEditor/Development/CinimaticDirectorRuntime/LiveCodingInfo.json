@@ -7,9 +7,9 @@
 			"CinematicTypes.gen.cpp.obj",
 			"CinimaticDirectorRuntime.init.gen.cpp.obj",
 			"PerModuleInline.gen.cpp.obj",
-			"CinematicCreator.cpp.obj",
 			"CinematicDirectorSubsystem.cpp.obj",
-			"CinimaticDirectorRuntimeModule.cpp.obj"
+			"CinimaticDirectorRuntimeModule.cpp.obj",
+			"CinematicCreator.cpp.obj"
 		]
 	}
 }

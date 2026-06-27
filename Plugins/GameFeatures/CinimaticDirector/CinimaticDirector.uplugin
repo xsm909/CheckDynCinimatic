@@ -23,5 +23,11 @@
 		}
 	],
 	"ExplicitlyLoaded": true,
-	"BuiltInInitialFeatureState": "Loaded"
+	"BuiltInInitialFeatureState": "Loaded",
+	"Plugins": [
+		{
+			"Name": "StructUtils",
+			"Enabled": true
+		}
+	]
 }

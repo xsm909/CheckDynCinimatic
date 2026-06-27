@@ -18,14 +18,23 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 class AActor;
 class UClass;
 class ULevelSequence;
+class USkeletalMesh;
+class UStaticMesh;
 enum class ECinematicInterpType : uint8;
 
 // ********** Begin Class UCinematicCreator ********************************************************
 #define FID_CheckDynCinimatic_Plugins_GameFeatures_CinimaticDirector_Source_CinimaticDirectorRuntime_CinematicCreator_CinematicCreator_h_11_RPC_WRAPPERS_NO_PURE_DECLS \
 	DECLARE_FUNCTION(execGetSequence); \
 	DECLARE_FUNCTION(execFlushChanges); \
+	DECLARE_FUNCTION(execAddRotatorPropertyKey); \
+	DECLARE_FUNCTION(execAddVectorPropertyKey); \
+	DECLARE_FUNCTION(execAddStringPropertyKey); \
+	DECLARE_FUNCTION(execAddBoolPropertyKey); \
+	DECLARE_FUNCTION(execAddFloatPropertyKey); \
 	DECLARE_FUNCTION(execAddTransformKey); \
 	DECLARE_FUNCTION(execSetCinematicDuration); \
+	DECLARE_FUNCTION(execRegisterSpawnableStaticMeshActor); \
+	DECLARE_FUNCTION(execRegisterSpawnableSkeletalMeshActor); \
 	DECLARE_FUNCTION(execRegisterSpawnableActor); \
 	DECLARE_FUNCTION(execRegisterPossessableActor);
 

@@ -18,11 +18,307 @@ CINIMATICDIRECTORRUNTIME_API UClass* Z_Construct_UClass_UCinematicCreator_NoRegi
 CINIMATICDIRECTORRUNTIME_API UEnum* Z_Construct_UEnum_CinimaticDirectorRuntime_ECinematicInterpType();
 COREUOBJECT_API UClass* Z_Construct_UClass_UClass_NoRegister();
 COREUOBJECT_API UClass* Z_Construct_UClass_UObject();
+COREUOBJECT_API UScriptStruct* Z_Construct_UScriptStruct_FRotator();
 COREUOBJECT_API UScriptStruct* Z_Construct_UScriptStruct_FTransform();
+COREUOBJECT_API UScriptStruct* Z_Construct_UScriptStruct_FVector();
 ENGINE_API UClass* Z_Construct_UClass_AActor_NoRegister();
+ENGINE_API UClass* Z_Construct_UClass_USkeletalMesh_NoRegister();
+ENGINE_API UClass* Z_Construct_UClass_UStaticMesh_NoRegister();
 LEVELSEQUENCE_API UClass* Z_Construct_UClass_ULevelSequence_NoRegister();
 UPackage* Z_Construct_UPackage__Script_CinimaticDirectorRuntime();
 // ********** End Cross Module References **********************************************************
+
+// ********** Begin Class UCinematicCreator Function AddBoolPropertyKey ****************************
+struct Z_Construct_UFunction_UCinematicCreator_AddBoolPropertyKey_Statics
+{
+	struct CinematicCreator_eventAddBoolPropertyKey_Parms
+	{
+		FName Alias;
+		FName PropertyName;
+		bool bValue;
+		float Time;
+	};
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+		{ "Category", "Cinematic|Variables" },
+		{ "ModuleRelativePath", "CinematicCreator/CinematicCreator.h" },
+	};
+#endif // WITH_METADATA
+
+// ********** Begin Function AddBoolPropertyKey constinit property declarations ********************
+	static const UECodeGen_Private::FNamePropertyParams NewProp_Alias;
+	static const UECodeGen_Private::FNamePropertyParams NewProp_PropertyName;
+	static void NewProp_bValue_SetBit(void* Obj);
+	static const UECodeGen_Private::FBoolPropertyParams NewProp_bValue;
+	static const UECodeGen_Private::FFloatPropertyParams NewProp_Time;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+// ********** End Function AddBoolPropertyKey constinit property declarations **********************
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+
+// ********** Begin Function AddBoolPropertyKey Property Definitions *******************************
+const UECodeGen_Private::FNamePropertyParams Z_Construct_UFunction_UCinematicCreator_AddBoolPropertyKey_Statics::NewProp_Alias = { "Alias", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Name, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(CinematicCreator_eventAddBoolPropertyKey_Parms, Alias), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FNamePropertyParams Z_Construct_UFunction_UCinematicCreator_AddBoolPropertyKey_Statics::NewProp_PropertyName = { "PropertyName", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Name, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(CinematicCreator_eventAddBoolPropertyKey_Parms, PropertyName), METADATA_PARAMS(0, nullptr) };
+void Z_Construct_UFunction_UCinematicCreator_AddBoolPropertyKey_Statics::NewProp_bValue_SetBit(void* Obj)
+{
+	((CinematicCreator_eventAddBoolPropertyKey_Parms*)Obj)->bValue = 1;
+}
+const UECodeGen_Private::FBoolPropertyParams Z_Construct_UFunction_UCinematicCreator_AddBoolPropertyKey_Statics::NewProp_bValue = { "bValue", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, sizeof(bool), sizeof(CinematicCreator_eventAddBoolPropertyKey_Parms), &Z_Construct_UFunction_UCinematicCreator_AddBoolPropertyKey_Statics::NewProp_bValue_SetBit, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_UCinematicCreator_AddBoolPropertyKey_Statics::NewProp_Time = { "Time", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(CinematicCreator_eventAddBoolPropertyKey_Parms, Time), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UCinematicCreator_AddBoolPropertyKey_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UCinematicCreator_AddBoolPropertyKey_Statics::NewProp_Alias,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UCinematicCreator_AddBoolPropertyKey_Statics::NewProp_PropertyName,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UCinematicCreator_AddBoolPropertyKey_Statics::NewProp_bValue,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UCinematicCreator_AddBoolPropertyKey_Statics::NewProp_Time,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UCinematicCreator_AddBoolPropertyKey_Statics::PropPointers) < 2048);
+// ********** End Function AddBoolPropertyKey Property Definitions *********************************
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UCinematicCreator_AddBoolPropertyKey_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_UCinematicCreator, nullptr, "AddBoolPropertyKey", 	Z_Construct_UFunction_UCinematicCreator_AddBoolPropertyKey_Statics::PropPointers, 
+	UE_ARRAY_COUNT(Z_Construct_UFunction_UCinematicCreator_AddBoolPropertyKey_Statics::PropPointers), 
+sizeof(Z_Construct_UFunction_UCinematicCreator_AddBoolPropertyKey_Statics::CinematicCreator_eventAddBoolPropertyKey_Parms),
+RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UCinematicCreator_AddBoolPropertyKey_Statics::Function_MetaDataParams), Z_Construct_UFunction_UCinematicCreator_AddBoolPropertyKey_Statics::Function_MetaDataParams)},  };
+static_assert(sizeof(Z_Construct_UFunction_UCinematicCreator_AddBoolPropertyKey_Statics::CinematicCreator_eventAddBoolPropertyKey_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_UCinematicCreator_AddBoolPropertyKey()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UCinematicCreator_AddBoolPropertyKey_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+DEFINE_FUNCTION(UCinematicCreator::execAddBoolPropertyKey)
+{
+	P_GET_PROPERTY(FNameProperty,Z_Param_Alias);
+	P_GET_PROPERTY(FNameProperty,Z_Param_PropertyName);
+	P_GET_UBOOL(Z_Param_bValue);
+	P_GET_PROPERTY(FFloatProperty,Z_Param_Time);
+	P_FINISH;
+	P_NATIVE_BEGIN;
+	P_THIS->AddBoolPropertyKey(Z_Param_Alias,Z_Param_PropertyName,Z_Param_bValue,Z_Param_Time);
+	P_NATIVE_END;
+}
+// ********** End Class UCinematicCreator Function AddBoolPropertyKey ******************************
+
+// ********** Begin Class UCinematicCreator Function AddFloatPropertyKey ***************************
+struct Z_Construct_UFunction_UCinematicCreator_AddFloatPropertyKey_Statics
+{
+	struct CinematicCreator_eventAddFloatPropertyKey_Parms
+	{
+		FName Alias;
+		FName PropertyName;
+		float Value;
+		float Time;
+		ECinematicInterpType Interp;
+	};
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+		{ "Category", "Cinematic|Variables" },
+		{ "ModuleRelativePath", "CinematicCreator/CinematicCreator.h" },
+	};
+#endif // WITH_METADATA
+
+// ********** Begin Function AddFloatPropertyKey constinit property declarations *******************
+	static const UECodeGen_Private::FNamePropertyParams NewProp_Alias;
+	static const UECodeGen_Private::FNamePropertyParams NewProp_PropertyName;
+	static const UECodeGen_Private::FFloatPropertyParams NewProp_Value;
+	static const UECodeGen_Private::FFloatPropertyParams NewProp_Time;
+	static const UECodeGen_Private::FBytePropertyParams NewProp_Interp_Underlying;
+	static const UECodeGen_Private::FEnumPropertyParams NewProp_Interp;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+// ********** End Function AddFloatPropertyKey constinit property declarations *********************
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+
+// ********** Begin Function AddFloatPropertyKey Property Definitions ******************************
+const UECodeGen_Private::FNamePropertyParams Z_Construct_UFunction_UCinematicCreator_AddFloatPropertyKey_Statics::NewProp_Alias = { "Alias", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Name, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(CinematicCreator_eventAddFloatPropertyKey_Parms, Alias), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FNamePropertyParams Z_Construct_UFunction_UCinematicCreator_AddFloatPropertyKey_Statics::NewProp_PropertyName = { "PropertyName", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Name, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(CinematicCreator_eventAddFloatPropertyKey_Parms, PropertyName), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_UCinematicCreator_AddFloatPropertyKey_Statics::NewProp_Value = { "Value", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(CinematicCreator_eventAddFloatPropertyKey_Parms, Value), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_UCinematicCreator_AddFloatPropertyKey_Statics::NewProp_Time = { "Time", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(CinematicCreator_eventAddFloatPropertyKey_Parms, Time), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FBytePropertyParams Z_Construct_UFunction_UCinematicCreator_AddFloatPropertyKey_Statics::NewProp_Interp_Underlying = { "UnderlyingType", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Byte, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, nullptr, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FEnumPropertyParams Z_Construct_UFunction_UCinematicCreator_AddFloatPropertyKey_Statics::NewProp_Interp = { "Interp", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Enum, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(CinematicCreator_eventAddFloatPropertyKey_Parms, Interp), Z_Construct_UEnum_CinimaticDirectorRuntime_ECinematicInterpType, METADATA_PARAMS(0, nullptr) }; // 4291322744
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UCinematicCreator_AddFloatPropertyKey_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UCinematicCreator_AddFloatPropertyKey_Statics::NewProp_Alias,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UCinematicCreator_AddFloatPropertyKey_Statics::NewProp_PropertyName,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UCinematicCreator_AddFloatPropertyKey_Statics::NewProp_Value,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UCinematicCreator_AddFloatPropertyKey_Statics::NewProp_Time,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UCinematicCreator_AddFloatPropertyKey_Statics::NewProp_Interp_Underlying,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UCinematicCreator_AddFloatPropertyKey_Statics::NewProp_Interp,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UCinematicCreator_AddFloatPropertyKey_Statics::PropPointers) < 2048);
+// ********** End Function AddFloatPropertyKey Property Definitions ********************************
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UCinematicCreator_AddFloatPropertyKey_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_UCinematicCreator, nullptr, "AddFloatPropertyKey", 	Z_Construct_UFunction_UCinematicCreator_AddFloatPropertyKey_Statics::PropPointers, 
+	UE_ARRAY_COUNT(Z_Construct_UFunction_UCinematicCreator_AddFloatPropertyKey_Statics::PropPointers), 
+sizeof(Z_Construct_UFunction_UCinematicCreator_AddFloatPropertyKey_Statics::CinematicCreator_eventAddFloatPropertyKey_Parms),
+RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UCinematicCreator_AddFloatPropertyKey_Statics::Function_MetaDataParams), Z_Construct_UFunction_UCinematicCreator_AddFloatPropertyKey_Statics::Function_MetaDataParams)},  };
+static_assert(sizeof(Z_Construct_UFunction_UCinematicCreator_AddFloatPropertyKey_Statics::CinematicCreator_eventAddFloatPropertyKey_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_UCinematicCreator_AddFloatPropertyKey()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UCinematicCreator_AddFloatPropertyKey_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+DEFINE_FUNCTION(UCinematicCreator::execAddFloatPropertyKey)
+{
+	P_GET_PROPERTY(FNameProperty,Z_Param_Alias);
+	P_GET_PROPERTY(FNameProperty,Z_Param_PropertyName);
+	P_GET_PROPERTY(FFloatProperty,Z_Param_Value);
+	P_GET_PROPERTY(FFloatProperty,Z_Param_Time);
+	P_GET_ENUM(ECinematicInterpType,Z_Param_Interp);
+	P_FINISH;
+	P_NATIVE_BEGIN;
+	P_THIS->AddFloatPropertyKey(Z_Param_Alias,Z_Param_PropertyName,Z_Param_Value,Z_Param_Time,ECinematicInterpType(Z_Param_Interp));
+	P_NATIVE_END;
+}
+// ********** End Class UCinematicCreator Function AddFloatPropertyKey *****************************
+
+// ********** Begin Class UCinematicCreator Function AddRotatorPropertyKey *************************
+struct Z_Construct_UFunction_UCinematicCreator_AddRotatorPropertyKey_Statics
+{
+	struct CinematicCreator_eventAddRotatorPropertyKey_Parms
+	{
+		FName Alias;
+		FName PropertyName;
+		FRotator Value;
+		float Time;
+		ECinematicInterpType Interp;
+	};
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+		{ "Category", "Cinematic|Variables" },
+		{ "ModuleRelativePath", "CinematicCreator/CinematicCreator.h" },
+	};
+#endif // WITH_METADATA
+
+// ********** Begin Function AddRotatorPropertyKey constinit property declarations *****************
+	static const UECodeGen_Private::FNamePropertyParams NewProp_Alias;
+	static const UECodeGen_Private::FNamePropertyParams NewProp_PropertyName;
+	static const UECodeGen_Private::FStructPropertyParams NewProp_Value;
+	static const UECodeGen_Private::FFloatPropertyParams NewProp_Time;
+	static const UECodeGen_Private::FBytePropertyParams NewProp_Interp_Underlying;
+	static const UECodeGen_Private::FEnumPropertyParams NewProp_Interp;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+// ********** End Function AddRotatorPropertyKey constinit property declarations *******************
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+
+// ********** Begin Function AddRotatorPropertyKey Property Definitions ****************************
+const UECodeGen_Private::FNamePropertyParams Z_Construct_UFunction_UCinematicCreator_AddRotatorPropertyKey_Statics::NewProp_Alias = { "Alias", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Name, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(CinematicCreator_eventAddRotatorPropertyKey_Parms, Alias), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FNamePropertyParams Z_Construct_UFunction_UCinematicCreator_AddRotatorPropertyKey_Statics::NewProp_PropertyName = { "PropertyName", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Name, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(CinematicCreator_eventAddRotatorPropertyKey_Parms, PropertyName), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_UCinematicCreator_AddRotatorPropertyKey_Statics::NewProp_Value = { "Value", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(CinematicCreator_eventAddRotatorPropertyKey_Parms, Value), Z_Construct_UScriptStruct_FRotator, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_UCinematicCreator_AddRotatorPropertyKey_Statics::NewProp_Time = { "Time", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(CinematicCreator_eventAddRotatorPropertyKey_Parms, Time), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FBytePropertyParams Z_Construct_UFunction_UCinematicCreator_AddRotatorPropertyKey_Statics::NewProp_Interp_Underlying = { "UnderlyingType", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Byte, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, nullptr, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FEnumPropertyParams Z_Construct_UFunction_UCinematicCreator_AddRotatorPropertyKey_Statics::NewProp_Interp = { "Interp", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Enum, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(CinematicCreator_eventAddRotatorPropertyKey_Parms, Interp), Z_Construct_UEnum_CinimaticDirectorRuntime_ECinematicInterpType, METADATA_PARAMS(0, nullptr) }; // 4291322744
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UCinematicCreator_AddRotatorPropertyKey_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UCinematicCreator_AddRotatorPropertyKey_Statics::NewProp_Alias,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UCinematicCreator_AddRotatorPropertyKey_Statics::NewProp_PropertyName,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UCinematicCreator_AddRotatorPropertyKey_Statics::NewProp_Value,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UCinematicCreator_AddRotatorPropertyKey_Statics::NewProp_Time,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UCinematicCreator_AddRotatorPropertyKey_Statics::NewProp_Interp_Underlying,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UCinematicCreator_AddRotatorPropertyKey_Statics::NewProp_Interp,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UCinematicCreator_AddRotatorPropertyKey_Statics::PropPointers) < 2048);
+// ********** End Function AddRotatorPropertyKey Property Definitions ******************************
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UCinematicCreator_AddRotatorPropertyKey_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_UCinematicCreator, nullptr, "AddRotatorPropertyKey", 	Z_Construct_UFunction_UCinematicCreator_AddRotatorPropertyKey_Statics::PropPointers, 
+	UE_ARRAY_COUNT(Z_Construct_UFunction_UCinematicCreator_AddRotatorPropertyKey_Statics::PropPointers), 
+sizeof(Z_Construct_UFunction_UCinematicCreator_AddRotatorPropertyKey_Statics::CinematicCreator_eventAddRotatorPropertyKey_Parms),
+RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04820401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UCinematicCreator_AddRotatorPropertyKey_Statics::Function_MetaDataParams), Z_Construct_UFunction_UCinematicCreator_AddRotatorPropertyKey_Statics::Function_MetaDataParams)},  };
+static_assert(sizeof(Z_Construct_UFunction_UCinematicCreator_AddRotatorPropertyKey_Statics::CinematicCreator_eventAddRotatorPropertyKey_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_UCinematicCreator_AddRotatorPropertyKey()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UCinematicCreator_AddRotatorPropertyKey_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+DEFINE_FUNCTION(UCinematicCreator::execAddRotatorPropertyKey)
+{
+	P_GET_PROPERTY(FNameProperty,Z_Param_Alias);
+	P_GET_PROPERTY(FNameProperty,Z_Param_PropertyName);
+	P_GET_STRUCT(FRotator,Z_Param_Value);
+	P_GET_PROPERTY(FFloatProperty,Z_Param_Time);
+	P_GET_ENUM(ECinematicInterpType,Z_Param_Interp);
+	P_FINISH;
+	P_NATIVE_BEGIN;
+	P_THIS->AddRotatorPropertyKey(Z_Param_Alias,Z_Param_PropertyName,Z_Param_Value,Z_Param_Time,ECinematicInterpType(Z_Param_Interp));
+	P_NATIVE_END;
+}
+// ********** End Class UCinematicCreator Function AddRotatorPropertyKey ***************************
+
+// ********** Begin Class UCinematicCreator Function AddStringPropertyKey **************************
+struct Z_Construct_UFunction_UCinematicCreator_AddStringPropertyKey_Statics
+{
+	struct CinematicCreator_eventAddStringPropertyKey_Parms
+	{
+		FName Alias;
+		FName PropertyName;
+		FString Value;
+		float Time;
+	};
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+		{ "Category", "Cinematic|Variables" },
+		{ "ModuleRelativePath", "CinematicCreator/CinematicCreator.h" },
+	};
+	static constexpr UECodeGen_Private::FMetaDataPairParam NewProp_Value_MetaData[] = {
+		{ "NativeConst", "" },
+	};
+#endif // WITH_METADATA
+
+// ********** Begin Function AddStringPropertyKey constinit property declarations ******************
+	static const UECodeGen_Private::FNamePropertyParams NewProp_Alias;
+	static const UECodeGen_Private::FNamePropertyParams NewProp_PropertyName;
+	static const UECodeGen_Private::FStrPropertyParams NewProp_Value;
+	static const UECodeGen_Private::FFloatPropertyParams NewProp_Time;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+// ********** End Function AddStringPropertyKey constinit property declarations ********************
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+
+// ********** Begin Function AddStringPropertyKey Property Definitions *****************************
+const UECodeGen_Private::FNamePropertyParams Z_Construct_UFunction_UCinematicCreator_AddStringPropertyKey_Statics::NewProp_Alias = { "Alias", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Name, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(CinematicCreator_eventAddStringPropertyKey_Parms, Alias), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FNamePropertyParams Z_Construct_UFunction_UCinematicCreator_AddStringPropertyKey_Statics::NewProp_PropertyName = { "PropertyName", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Name, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(CinematicCreator_eventAddStringPropertyKey_Parms, PropertyName), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FStrPropertyParams Z_Construct_UFunction_UCinematicCreator_AddStringPropertyKey_Statics::NewProp_Value = { "Value", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Str, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(CinematicCreator_eventAddStringPropertyKey_Parms, Value), METADATA_PARAMS(UE_ARRAY_COUNT(NewProp_Value_MetaData), NewProp_Value_MetaData) };
+const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_UCinematicCreator_AddStringPropertyKey_Statics::NewProp_Time = { "Time", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(CinematicCreator_eventAddStringPropertyKey_Parms, Time), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UCinematicCreator_AddStringPropertyKey_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UCinematicCreator_AddStringPropertyKey_Statics::NewProp_Alias,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UCinematicCreator_AddStringPropertyKey_Statics::NewProp_PropertyName,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UCinematicCreator_AddStringPropertyKey_Statics::NewProp_Value,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UCinematicCreator_AddStringPropertyKey_Statics::NewProp_Time,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UCinematicCreator_AddStringPropertyKey_Statics::PropPointers) < 2048);
+// ********** End Function AddStringPropertyKey Property Definitions *******************************
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UCinematicCreator_AddStringPropertyKey_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_UCinematicCreator, nullptr, "AddStringPropertyKey", 	Z_Construct_UFunction_UCinematicCreator_AddStringPropertyKey_Statics::PropPointers, 
+	UE_ARRAY_COUNT(Z_Construct_UFunction_UCinematicCreator_AddStringPropertyKey_Statics::PropPointers), 
+sizeof(Z_Construct_UFunction_UCinematicCreator_AddStringPropertyKey_Statics::CinematicCreator_eventAddStringPropertyKey_Parms),
+RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UCinematicCreator_AddStringPropertyKey_Statics::Function_MetaDataParams), Z_Construct_UFunction_UCinematicCreator_AddStringPropertyKey_Statics::Function_MetaDataParams)},  };
+static_assert(sizeof(Z_Construct_UFunction_UCinematicCreator_AddStringPropertyKey_Statics::CinematicCreator_eventAddStringPropertyKey_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_UCinematicCreator_AddStringPropertyKey()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UCinematicCreator_AddStringPropertyKey_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+DEFINE_FUNCTION(UCinematicCreator::execAddStringPropertyKey)
+{
+	P_GET_PROPERTY(FNameProperty,Z_Param_Alias);
+	P_GET_PROPERTY(FNameProperty,Z_Param_PropertyName);
+	P_GET_PROPERTY(FStrProperty,Z_Param_Value);
+	P_GET_PROPERTY(FFloatProperty,Z_Param_Time);
+	P_FINISH;
+	P_NATIVE_BEGIN;
+	P_THIS->AddStringPropertyKey(Z_Param_Alias,Z_Param_PropertyName,Z_Param_Value,Z_Param_Time);
+	P_NATIVE_END;
+}
+// ********** End Class UCinematicCreator Function AddStringPropertyKey ****************************
 
 // ********** Begin Class UCinematicCreator Function AddTransformKey *******************************
 struct Z_Construct_UFunction_UCinematicCreator_AddTransformKey_Statics
@@ -93,6 +389,81 @@ DEFINE_FUNCTION(UCinematicCreator::execAddTransformKey)
 	P_NATIVE_END;
 }
 // ********** End Class UCinematicCreator Function AddTransformKey *********************************
+
+// ********** Begin Class UCinematicCreator Function AddVectorPropertyKey **************************
+struct Z_Construct_UFunction_UCinematicCreator_AddVectorPropertyKey_Statics
+{
+	struct CinematicCreator_eventAddVectorPropertyKey_Parms
+	{
+		FName Alias;
+		FName PropertyName;
+		FVector Value;
+		float Time;
+		ECinematicInterpType Interp;
+	};
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+		{ "Category", "Cinematic|Variables" },
+		{ "ModuleRelativePath", "CinematicCreator/CinematicCreator.h" },
+	};
+#endif // WITH_METADATA
+
+// ********** Begin Function AddVectorPropertyKey constinit property declarations ******************
+	static const UECodeGen_Private::FNamePropertyParams NewProp_Alias;
+	static const UECodeGen_Private::FNamePropertyParams NewProp_PropertyName;
+	static const UECodeGen_Private::FStructPropertyParams NewProp_Value;
+	static const UECodeGen_Private::FFloatPropertyParams NewProp_Time;
+	static const UECodeGen_Private::FBytePropertyParams NewProp_Interp_Underlying;
+	static const UECodeGen_Private::FEnumPropertyParams NewProp_Interp;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+// ********** End Function AddVectorPropertyKey constinit property declarations ********************
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+
+// ********** Begin Function AddVectorPropertyKey Property Definitions *****************************
+const UECodeGen_Private::FNamePropertyParams Z_Construct_UFunction_UCinematicCreator_AddVectorPropertyKey_Statics::NewProp_Alias = { "Alias", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Name, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(CinematicCreator_eventAddVectorPropertyKey_Parms, Alias), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FNamePropertyParams Z_Construct_UFunction_UCinematicCreator_AddVectorPropertyKey_Statics::NewProp_PropertyName = { "PropertyName", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Name, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(CinematicCreator_eventAddVectorPropertyKey_Parms, PropertyName), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FStructPropertyParams Z_Construct_UFunction_UCinematicCreator_AddVectorPropertyKey_Statics::NewProp_Value = { "Value", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(CinematicCreator_eventAddVectorPropertyKey_Parms, Value), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_UCinematicCreator_AddVectorPropertyKey_Statics::NewProp_Time = { "Time", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(CinematicCreator_eventAddVectorPropertyKey_Parms, Time), METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FBytePropertyParams Z_Construct_UFunction_UCinematicCreator_AddVectorPropertyKey_Statics::NewProp_Interp_Underlying = { "UnderlyingType", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Byte, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, 0, nullptr, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FEnumPropertyParams Z_Construct_UFunction_UCinematicCreator_AddVectorPropertyKey_Statics::NewProp_Interp = { "Interp", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Enum, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(CinematicCreator_eventAddVectorPropertyKey_Parms, Interp), Z_Construct_UEnum_CinimaticDirectorRuntime_ECinematicInterpType, METADATA_PARAMS(0, nullptr) }; // 4291322744
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UCinematicCreator_AddVectorPropertyKey_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UCinematicCreator_AddVectorPropertyKey_Statics::NewProp_Alias,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UCinematicCreator_AddVectorPropertyKey_Statics::NewProp_PropertyName,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UCinematicCreator_AddVectorPropertyKey_Statics::NewProp_Value,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UCinematicCreator_AddVectorPropertyKey_Statics::NewProp_Time,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UCinematicCreator_AddVectorPropertyKey_Statics::NewProp_Interp_Underlying,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UCinematicCreator_AddVectorPropertyKey_Statics::NewProp_Interp,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UCinematicCreator_AddVectorPropertyKey_Statics::PropPointers) < 2048);
+// ********** End Function AddVectorPropertyKey Property Definitions *******************************
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UCinematicCreator_AddVectorPropertyKey_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_UCinematicCreator, nullptr, "AddVectorPropertyKey", 	Z_Construct_UFunction_UCinematicCreator_AddVectorPropertyKey_Statics::PropPointers, 
+	UE_ARRAY_COUNT(Z_Construct_UFunction_UCinematicCreator_AddVectorPropertyKey_Statics::PropPointers), 
+sizeof(Z_Construct_UFunction_UCinematicCreator_AddVectorPropertyKey_Statics::CinematicCreator_eventAddVectorPropertyKey_Parms),
+RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04820401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UCinematicCreator_AddVectorPropertyKey_Statics::Function_MetaDataParams), Z_Construct_UFunction_UCinematicCreator_AddVectorPropertyKey_Statics::Function_MetaDataParams)},  };
+static_assert(sizeof(Z_Construct_UFunction_UCinematicCreator_AddVectorPropertyKey_Statics::CinematicCreator_eventAddVectorPropertyKey_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_UCinematicCreator_AddVectorPropertyKey()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UCinematicCreator_AddVectorPropertyKey_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+DEFINE_FUNCTION(UCinematicCreator::execAddVectorPropertyKey)
+{
+	P_GET_PROPERTY(FNameProperty,Z_Param_Alias);
+	P_GET_PROPERTY(FNameProperty,Z_Param_PropertyName);
+	P_GET_STRUCT(FVector,Z_Param_Value);
+	P_GET_PROPERTY(FFloatProperty,Z_Param_Time);
+	P_GET_ENUM(ECinematicInterpType,Z_Param_Interp);
+	P_FINISH;
+	P_NATIVE_BEGIN;
+	P_THIS->AddVectorPropertyKey(Z_Param_Alias,Z_Param_PropertyName,Z_Param_Value,Z_Param_Time,ECinematicInterpType(Z_Param_Interp));
+	P_NATIVE_END;
+}
+// ********** End Class UCinematicCreator Function AddVectorPropertyKey ****************************
 
 // ********** Begin Class UCinematicCreator Function FlushChanges **********************************
 struct Z_Construct_UFunction_UCinematicCreator_FlushChanges_Statics
@@ -325,6 +696,138 @@ DEFINE_FUNCTION(UCinematicCreator::execRegisterSpawnableActor)
 }
 // ********** End Class UCinematicCreator Function RegisterSpawnableActor **************************
 
+// ********** Begin Class UCinematicCreator Function RegisterSpawnableSkeletalMeshActor ************
+struct Z_Construct_UFunction_UCinematicCreator_RegisterSpawnableSkeletalMeshActor_Statics
+{
+	struct CinematicCreator_eventRegisterSpawnableSkeletalMeshActor_Parms
+	{
+		USkeletalMesh* Mesh;
+		FName Alias;
+		bool ReturnValue;
+	};
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+		{ "Category", "Cinematic" },
+		{ "ModuleRelativePath", "CinematicCreator/CinematicCreator.h" },
+	};
+#endif // WITH_METADATA
+
+// ********** Begin Function RegisterSpawnableSkeletalMeshActor constinit property declarations ****
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_Mesh;
+	static const UECodeGen_Private::FNamePropertyParams NewProp_Alias;
+	static void NewProp_ReturnValue_SetBit(void* Obj);
+	static const UECodeGen_Private::FBoolPropertyParams NewProp_ReturnValue;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+// ********** End Function RegisterSpawnableSkeletalMeshActor constinit property declarations ******
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+
+// ********** Begin Function RegisterSpawnableSkeletalMeshActor Property Definitions ***************
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_UCinematicCreator_RegisterSpawnableSkeletalMeshActor_Statics::NewProp_Mesh = { "Mesh", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(CinematicCreator_eventRegisterSpawnableSkeletalMeshActor_Parms, Mesh), Z_Construct_UClass_USkeletalMesh_NoRegister, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FNamePropertyParams Z_Construct_UFunction_UCinematicCreator_RegisterSpawnableSkeletalMeshActor_Statics::NewProp_Alias = { "Alias", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Name, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(CinematicCreator_eventRegisterSpawnableSkeletalMeshActor_Parms, Alias), METADATA_PARAMS(0, nullptr) };
+void Z_Construct_UFunction_UCinematicCreator_RegisterSpawnableSkeletalMeshActor_Statics::NewProp_ReturnValue_SetBit(void* Obj)
+{
+	((CinematicCreator_eventRegisterSpawnableSkeletalMeshActor_Parms*)Obj)->ReturnValue = 1;
+}
+const UECodeGen_Private::FBoolPropertyParams Z_Construct_UFunction_UCinematicCreator_RegisterSpawnableSkeletalMeshActor_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, sizeof(bool), sizeof(CinematicCreator_eventRegisterSpawnableSkeletalMeshActor_Parms), &Z_Construct_UFunction_UCinematicCreator_RegisterSpawnableSkeletalMeshActor_Statics::NewProp_ReturnValue_SetBit, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UCinematicCreator_RegisterSpawnableSkeletalMeshActor_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UCinematicCreator_RegisterSpawnableSkeletalMeshActor_Statics::NewProp_Mesh,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UCinematicCreator_RegisterSpawnableSkeletalMeshActor_Statics::NewProp_Alias,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UCinematicCreator_RegisterSpawnableSkeletalMeshActor_Statics::NewProp_ReturnValue,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UCinematicCreator_RegisterSpawnableSkeletalMeshActor_Statics::PropPointers) < 2048);
+// ********** End Function RegisterSpawnableSkeletalMeshActor Property Definitions *****************
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UCinematicCreator_RegisterSpawnableSkeletalMeshActor_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_UCinematicCreator, nullptr, "RegisterSpawnableSkeletalMeshActor", 	Z_Construct_UFunction_UCinematicCreator_RegisterSpawnableSkeletalMeshActor_Statics::PropPointers, 
+	UE_ARRAY_COUNT(Z_Construct_UFunction_UCinematicCreator_RegisterSpawnableSkeletalMeshActor_Statics::PropPointers), 
+sizeof(Z_Construct_UFunction_UCinematicCreator_RegisterSpawnableSkeletalMeshActor_Statics::CinematicCreator_eventRegisterSpawnableSkeletalMeshActor_Parms),
+RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UCinematicCreator_RegisterSpawnableSkeletalMeshActor_Statics::Function_MetaDataParams), Z_Construct_UFunction_UCinematicCreator_RegisterSpawnableSkeletalMeshActor_Statics::Function_MetaDataParams)},  };
+static_assert(sizeof(Z_Construct_UFunction_UCinematicCreator_RegisterSpawnableSkeletalMeshActor_Statics::CinematicCreator_eventRegisterSpawnableSkeletalMeshActor_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_UCinematicCreator_RegisterSpawnableSkeletalMeshActor()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UCinematicCreator_RegisterSpawnableSkeletalMeshActor_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+DEFINE_FUNCTION(UCinematicCreator::execRegisterSpawnableSkeletalMeshActor)
+{
+	P_GET_OBJECT(USkeletalMesh,Z_Param_Mesh);
+	P_GET_PROPERTY(FNameProperty,Z_Param_Alias);
+	P_FINISH;
+	P_NATIVE_BEGIN;
+	*(bool*)Z_Param__Result=P_THIS->RegisterSpawnableSkeletalMeshActor(Z_Param_Mesh,Z_Param_Alias);
+	P_NATIVE_END;
+}
+// ********** End Class UCinematicCreator Function RegisterSpawnableSkeletalMeshActor **************
+
+// ********** Begin Class UCinematicCreator Function RegisterSpawnableStaticMeshActor **************
+struct Z_Construct_UFunction_UCinematicCreator_RegisterSpawnableStaticMeshActor_Statics
+{
+	struct CinematicCreator_eventRegisterSpawnableStaticMeshActor_Parms
+	{
+		UStaticMesh* Mesh;
+		FName Alias;
+		bool ReturnValue;
+	};
+#if WITH_METADATA
+	static constexpr UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[] = {
+		{ "Category", "Cinematic" },
+		{ "ModuleRelativePath", "CinematicCreator/CinematicCreator.h" },
+	};
+#endif // WITH_METADATA
+
+// ********** Begin Function RegisterSpawnableStaticMeshActor constinit property declarations ******
+	static const UECodeGen_Private::FObjectPropertyParams NewProp_Mesh;
+	static const UECodeGen_Private::FNamePropertyParams NewProp_Alias;
+	static void NewProp_ReturnValue_SetBit(void* Obj);
+	static const UECodeGen_Private::FBoolPropertyParams NewProp_ReturnValue;
+	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+// ********** End Function RegisterSpawnableStaticMeshActor constinit property declarations ********
+	static const UECodeGen_Private::FFunctionParams FuncParams;
+};
+
+// ********** Begin Function RegisterSpawnableStaticMeshActor Property Definitions *****************
+const UECodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_UCinematicCreator_RegisterSpawnableStaticMeshActor_Statics::NewProp_Mesh = { "Mesh", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(CinematicCreator_eventRegisterSpawnableStaticMeshActor_Parms, Mesh), Z_Construct_UClass_UStaticMesh_NoRegister, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FNamePropertyParams Z_Construct_UFunction_UCinematicCreator_RegisterSpawnableStaticMeshActor_Statics::NewProp_Alias = { "Alias", nullptr, (EPropertyFlags)0x0010000000000080, UECodeGen_Private::EPropertyGenFlags::Name, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, STRUCT_OFFSET(CinematicCreator_eventRegisterSpawnableStaticMeshActor_Parms, Alias), METADATA_PARAMS(0, nullptr) };
+void Z_Construct_UFunction_UCinematicCreator_RegisterSpawnableStaticMeshActor_Statics::NewProp_ReturnValue_SetBit(void* Obj)
+{
+	((CinematicCreator_eventRegisterSpawnableStaticMeshActor_Parms*)Obj)->ReturnValue = 1;
+}
+const UECodeGen_Private::FBoolPropertyParams Z_Construct_UFunction_UCinematicCreator_RegisterSpawnableStaticMeshActor_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, nullptr, nullptr, 1, sizeof(bool), sizeof(CinematicCreator_eventRegisterSpawnableStaticMeshActor_Parms), &Z_Construct_UFunction_UCinematicCreator_RegisterSpawnableStaticMeshActor_Statics::NewProp_ReturnValue_SetBit, METADATA_PARAMS(0, nullptr) };
+const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UCinematicCreator_RegisterSpawnableStaticMeshActor_Statics::PropPointers[] = {
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UCinematicCreator_RegisterSpawnableStaticMeshActor_Statics::NewProp_Mesh,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UCinematicCreator_RegisterSpawnableStaticMeshActor_Statics::NewProp_Alias,
+	(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UCinematicCreator_RegisterSpawnableStaticMeshActor_Statics::NewProp_ReturnValue,
+};
+static_assert(UE_ARRAY_COUNT(Z_Construct_UFunction_UCinematicCreator_RegisterSpawnableStaticMeshActor_Statics::PropPointers) < 2048);
+// ********** End Function RegisterSpawnableStaticMeshActor Property Definitions *******************
+const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_UCinematicCreator_RegisterSpawnableStaticMeshActor_Statics::FuncParams = { { (UObject*(*)())Z_Construct_UClass_UCinematicCreator, nullptr, "RegisterSpawnableStaticMeshActor", 	Z_Construct_UFunction_UCinematicCreator_RegisterSpawnableStaticMeshActor_Statics::PropPointers, 
+	UE_ARRAY_COUNT(Z_Construct_UFunction_UCinematicCreator_RegisterSpawnableStaticMeshActor_Statics::PropPointers), 
+sizeof(Z_Construct_UFunction_UCinematicCreator_RegisterSpawnableStaticMeshActor_Statics::CinematicCreator_eventRegisterSpawnableStaticMeshActor_Parms),
+RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x04020401, 0, 0, METADATA_PARAMS(UE_ARRAY_COUNT(Z_Construct_UFunction_UCinematicCreator_RegisterSpawnableStaticMeshActor_Statics::Function_MetaDataParams), Z_Construct_UFunction_UCinematicCreator_RegisterSpawnableStaticMeshActor_Statics::Function_MetaDataParams)},  };
+static_assert(sizeof(Z_Construct_UFunction_UCinematicCreator_RegisterSpawnableStaticMeshActor_Statics::CinematicCreator_eventRegisterSpawnableStaticMeshActor_Parms) < MAX_uint16);
+UFunction* Z_Construct_UFunction_UCinematicCreator_RegisterSpawnableStaticMeshActor()
+{
+	static UFunction* ReturnFunction = nullptr;
+	if (!ReturnFunction)
+	{
+		UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_UCinematicCreator_RegisterSpawnableStaticMeshActor_Statics::FuncParams);
+	}
+	return ReturnFunction;
+}
+DEFINE_FUNCTION(UCinematicCreator::execRegisterSpawnableStaticMeshActor)
+{
+	P_GET_OBJECT(UStaticMesh,Z_Param_Mesh);
+	P_GET_PROPERTY(FNameProperty,Z_Param_Alias);
+	P_FINISH;
+	P_NATIVE_BEGIN;
+	*(bool*)Z_Param__Result=P_THIS->RegisterSpawnableStaticMeshActor(Z_Param_Mesh,Z_Param_Alias);
+	P_NATIVE_END;
+}
+// ********** End Class UCinematicCreator Function RegisterSpawnableStaticMeshActor ****************
+
 // ********** Begin Class UCinematicCreator Function SetCinematicDuration **************************
 struct Z_Construct_UFunction_UCinematicCreator_SetCinematicDuration_Statics
 {
@@ -425,20 +928,34 @@ struct Z_Construct_UClass_UCinematicCreator_Statics
 	static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
 // ********** End Class UCinematicCreator constinit property declarations **************************
 	static constexpr UE::CodeGen::FClassNativeFunction Funcs[] = {
+		{ .NameUTF8 = UTF8TEXT("AddBoolPropertyKey"), .Pointer = &UCinematicCreator::execAddBoolPropertyKey },
+		{ .NameUTF8 = UTF8TEXT("AddFloatPropertyKey"), .Pointer = &UCinematicCreator::execAddFloatPropertyKey },
+		{ .NameUTF8 = UTF8TEXT("AddRotatorPropertyKey"), .Pointer = &UCinematicCreator::execAddRotatorPropertyKey },
+		{ .NameUTF8 = UTF8TEXT("AddStringPropertyKey"), .Pointer = &UCinematicCreator::execAddStringPropertyKey },
 		{ .NameUTF8 = UTF8TEXT("AddTransformKey"), .Pointer = &UCinematicCreator::execAddTransformKey },
+		{ .NameUTF8 = UTF8TEXT("AddVectorPropertyKey"), .Pointer = &UCinematicCreator::execAddVectorPropertyKey },
 		{ .NameUTF8 = UTF8TEXT("FlushChanges"), .Pointer = &UCinematicCreator::execFlushChanges },
 		{ .NameUTF8 = UTF8TEXT("GetSequence"), .Pointer = &UCinematicCreator::execGetSequence },
 		{ .NameUTF8 = UTF8TEXT("RegisterPossessableActor"), .Pointer = &UCinematicCreator::execRegisterPossessableActor },
 		{ .NameUTF8 = UTF8TEXT("RegisterSpawnableActor"), .Pointer = &UCinematicCreator::execRegisterSpawnableActor },
+		{ .NameUTF8 = UTF8TEXT("RegisterSpawnableSkeletalMeshActor"), .Pointer = &UCinematicCreator::execRegisterSpawnableSkeletalMeshActor },
+		{ .NameUTF8 = UTF8TEXT("RegisterSpawnableStaticMeshActor"), .Pointer = &UCinematicCreator::execRegisterSpawnableStaticMeshActor },
 		{ .NameUTF8 = UTF8TEXT("SetCinematicDuration"), .Pointer = &UCinematicCreator::execSetCinematicDuration },
 	};
 	static UObject* (*const DependentSingletons[])();
 	static constexpr FClassFunctionLinkInfo FuncInfo[] = {
+		{ &Z_Construct_UFunction_UCinematicCreator_AddBoolPropertyKey, "AddBoolPropertyKey" }, // 3844017806
+		{ &Z_Construct_UFunction_UCinematicCreator_AddFloatPropertyKey, "AddFloatPropertyKey" }, // 3734081569
+		{ &Z_Construct_UFunction_UCinematicCreator_AddRotatorPropertyKey, "AddRotatorPropertyKey" }, // 916086471
+		{ &Z_Construct_UFunction_UCinematicCreator_AddStringPropertyKey, "AddStringPropertyKey" }, // 344020825
 		{ &Z_Construct_UFunction_UCinematicCreator_AddTransformKey, "AddTransformKey" }, // 4120311067
+		{ &Z_Construct_UFunction_UCinematicCreator_AddVectorPropertyKey, "AddVectorPropertyKey" }, // 2407313384
 		{ &Z_Construct_UFunction_UCinematicCreator_FlushChanges, "FlushChanges" }, // 3802193288
 		{ &Z_Construct_UFunction_UCinematicCreator_GetSequence, "GetSequence" }, // 3198733038
 		{ &Z_Construct_UFunction_UCinematicCreator_RegisterPossessableActor, "RegisterPossessableActor" }, // 3591746497
 		{ &Z_Construct_UFunction_UCinematicCreator_RegisterSpawnableActor, "RegisterSpawnableActor" }, // 14723223
+		{ &Z_Construct_UFunction_UCinematicCreator_RegisterSpawnableSkeletalMeshActor, "RegisterSpawnableSkeletalMeshActor" }, // 3529530703
+		{ &Z_Construct_UFunction_UCinematicCreator_RegisterSpawnableStaticMeshActor, "RegisterSpawnableStaticMeshActor" }, // 1091808019
 		{ &Z_Construct_UFunction_UCinematicCreator_SetCinematicDuration, "SetCinematicDuration" }, // 2866084287
 	};
 	static_assert(UE_ARRAY_COUNT(FuncInfo) < 2048);
@@ -497,10 +1014,10 @@ UCinematicCreator::~UCinematicCreator() {}
 struct Z_CompiledInDeferFile_FID_CheckDynCinimatic_Plugins_GameFeatures_CinimaticDirector_Source_CinimaticDirectorRuntime_CinematicCreator_CinematicCreator_h__Script_CinimaticDirectorRuntime_Statics
 {
 	static constexpr FClassRegisterCompiledInInfo ClassInfo[] = {
-		{ Z_Construct_UClass_UCinematicCreator, UCinematicCreator::StaticClass, TEXT("UCinematicCreator"), &Z_Registration_Info_UClass_UCinematicCreator, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UCinematicCreator), 2969316747U) },
+		{ Z_Construct_UClass_UCinematicCreator, UCinematicCreator::StaticClass, TEXT("UCinematicCreator"), &Z_Registration_Info_UClass_UCinematicCreator, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(UCinematicCreator), 1562974984U) },
 	};
 }; // Z_CompiledInDeferFile_FID_CheckDynCinimatic_Plugins_GameFeatures_CinimaticDirector_Source_CinimaticDirectorRuntime_CinematicCreator_CinematicCreator_h__Script_CinimaticDirectorRuntime_Statics 
-static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_CheckDynCinimatic_Plugins_GameFeatures_CinimaticDirector_Source_CinimaticDirectorRuntime_CinematicCreator_CinematicCreator_h__Script_CinimaticDirectorRuntime_3907095098{
+static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_CheckDynCinimatic_Plugins_GameFeatures_CinimaticDirector_Source_CinimaticDirectorRuntime_CinematicCreator_CinematicCreator_h__Script_CinimaticDirectorRuntime_3281125995{
 	TEXT("/Script/CinimaticDirectorRuntime"),
 	Z_CompiledInDeferFile_FID_CheckDynCinimatic_Plugins_GameFeatures_CinimaticDirector_Source_CinimaticDirectorRuntime_CinematicCreator_CinematicCreator_h__Script_CinimaticDirectorRuntime_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_CheckDynCinimatic_Plugins_GameFeatures_CinimaticDirector_Source_CinimaticDirectorRuntime_CinematicCreator_CinematicCreator_h__Script_CinimaticDirectorRuntime_Statics::ClassInfo),
 	nullptr, 0,

@@ -40,7 +40,10 @@ public class CinimaticDirectorRuntime : ModuleRules
 			"MovieSceneTracks",
 			"Slate",
 			"SlateCore",
-			"LevelSequence"
+			"LevelSequence",
+			"StructUtils",
+			"Json",
+			"JsonUtilities"
 		});
 
 		if (Target.bBuildEditor == true)
