@@ -23,7 +23,8 @@ public class CheckDynCinimatic : ModuleRules
 			"Slate",
 			"LevelSequence",
 			"MovieScene",
-			"MovieSceneTracks"
+			"MovieSceneTracks",
+			"MotionWarping",
 			// "AssetTools" и "LevelSequenceEditor" УДАЛЕНЫ отсюда
 		});
 
