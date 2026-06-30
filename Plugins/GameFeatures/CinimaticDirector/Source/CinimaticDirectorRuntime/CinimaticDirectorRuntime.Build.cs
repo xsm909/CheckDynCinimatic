@@ -43,7 +43,7 @@ public class CinimaticDirectorRuntime : ModuleRules
 			"LevelSequence",
 			"StructUtils",
 			"Json",
-			"JsonUtilities"
+			"JsonUtilities",
 		});
 
 		if (Target.bBuildEditor == true)

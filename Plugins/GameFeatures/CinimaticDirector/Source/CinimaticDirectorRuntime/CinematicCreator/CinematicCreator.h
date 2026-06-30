@@ -13,6 +13,13 @@ class CINIMATICDIRECTORRUNTIME_API UCinematicCreator : public UObject
 
 public:
 	void InitializeCreator();
+	
+	UFUNCTION(BlueprintCallable)
+	bool LoadScenario(FString JsonString);
+	
+	UFUNCTION(BlueprintPure, Category = "Cinematic")
+	const TArray<FCinematicAction>& GetActions() const { return Actions; }
+
 
 	// Регистрация уже существующего актора (Possessable)
 	UFUNCTION(BlueprintCallable, Category = "Cinematic")
@@ -69,6 +76,11 @@ public:
 	
 
 private:
+	
+	UPROPERTY()
+	TArray<FCinematicAction> Actions;
+
+	
 	UPROPERTY()
 	ULevelSequence* Sequence;
 

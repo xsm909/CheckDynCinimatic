@@ -31,6 +31,31 @@ void UCinematicCreator::InitializeCreator()
     Sequence->Initialize();
 }
 
+
+bool UCinematicCreator::LoadScenario(FString JsonString)
+{
+    // Используем TJsonReader для чтения строки
+    TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(JsonString);
+    
+    // Прямая десериализация в TArray через встроенный конвертер
+    // Это избавляет нас от ручного цикла и создания промежуточных FJsonValue
+    TArray<FCinematicAction> TempActions;
+    if (!FJsonObjectConverter::JsonArrayStringToUStruct(JsonString, &TempActions))
+    {
+        UE_LOG(LogTemp, Error, TEXT("Failed to deserialize JSON array to FCinematicAction array"));
+        return false;
+    }
+
+    // Присваиваем результат и сортируем
+    Actions = MoveTemp(TempActions);
+    
+    Actions.Sort([](const FCinematicAction& A, const FCinematicAction& B) {
+        return A.Time < B.Time;
+    });
+    return true;
+}
+
+
 bool UCinematicCreator::RegisterPossessableActor(AActor* Actor, FName Alias)
 {
     if (!Actor || !Sequence) return false;
